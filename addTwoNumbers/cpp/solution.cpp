@@ -75,7 +75,7 @@ public:
         int digits_count = getDigitsCountFromNumber(&res);
         cout << "digits count: " << digits_count << endl;
         
-        int arr[digits_count];
+        int* arr = new int[digits_count];
         ListNode* list_node_arr = new ListNode[digits_count];
         getDigitsFromNumber(&res, &digits_count, arr);
         
