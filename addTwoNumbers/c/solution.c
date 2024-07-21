@@ -108,7 +108,7 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2)
 
 int main()
 {
-    struct ListNode l3 = { 3 };
+    struct ListNode l3 = { 3 };w
     struct ListNode l2 = { 2, &l3 };
     struct ListNode l1 = { 1, &l2 };
     struct ListNode l6 = { 6 };
