@@ -15,80 +15,100 @@ struct ListNode
 class Solution
 {
 public:
-    ListNode* addElementToList(ListNode* head, int data)
-    {
-        if (head == nullptr) {
-            ListNode* node = new ListNode;
-            node->val = data;
-            head = node;
-            node->next = nullptr;
-        } else {
-            ListNode* node = new ListNode;
-            node->val = data;
-            node->next = head;
-            head = node;
-        }
+    // ListNode* addElementToList(ListNode* head, int data)
+    // {
+    //     if (head == nullptr) {
+    //         ListNode* node = new ListNode;
+    //         node->val = data;
+    //         head = node;
+    //         node->next = nullptr;
+    //     } else {
+    //         ListNode* node = new ListNode;
+    //         node->val = data;
+    //         node->next = head;
+    //         head = node;
+    //     }
 
-        return head;
-    }
+    //     return head;
+    // }
+
+    ListNode* addElementToList(ListNode* head, int data)
+        {
+            if (head == nullptr) {
+                ListNode* node = new ListNode;
+                node->val = data;
+                head = node;
+                node->next = nullptr;
+            } else {
+                
+                ListNode* tail = head;
+                ListNode* node = new ListNode;
+                node->val = data;
+
+                while (true) {
+                    if (tail->next == nullptr) {
+                        tail->next = node;
+                        node->next = nullptr;
+                        break;
+                    }
+                    tail = tail->next;
+                }
+            }
+
+            return head;
+        }
 
     ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     {
-        int i = 0, j = 0;
+        int i = 0;
+        int temp = 0, rem = 0;
+
         ListNode *HEAD = new ListNode;
         HEAD = nullptr;
 
-        int temp = 0, rem = 0;
+        
 
         while (true)
         {
-            rem = (l1->val + l2->val + temp) % 10;
-            temp = (l1->val + l2->val) / 10;
-            HEAD = addElementToList(HEAD, rem);
-            l1 = l1->next;
-            l2 = l2->next;
-            if ((l1->next == nullptr) && (l2->next == nullptr)) {
+
+            if ((l1 != nullptr) && (l2 != nullptr)) {
+                cout << "[CONDITIONAL]::branch::01 -> i: " << i << ";\n";
                 rem = (l1->val + l2->val + temp) % 10;
-                temp = (l1->val + l2->val) / 10;
+                temp = (l1->val + l2->val + temp) / 10;
                 HEAD = addElementToList(HEAD, rem);
+                l1 = l1->next;
+                l2 = l2->next;
+                i++;
+                continue;
+                }
+            else if ((l1 == nullptr) && (l2 == nullptr)) {
+                if (temp != 0) {
+                    cout << "[CONDITIONAL]::branch::05 -> i: " << i << ";\n";
+                    HEAD = addElementToList(HEAD, temp);
+                }
+                break;
+            } else if ((l1 == nullptr)) {
+                cout << "[CONDITIONAL]::branch::03 -> i: " << i << ";\n";
+                rem = (l2->val + temp) % 10;
+                temp = (l2->val + temp) / 10;
+                HEAD = addElementToList(HEAD, rem);
+                l2 = l2->next;
+                i++;
+                continue;
+            } else if ((l2 == nullptr)) {
+                cout << "[CONDITIONAL]::branch::04 -> i: " << i << ";\n";
+                rem = (l1->val + temp) % 10;
+                temp = (l1->val) / 10 + temp;
+                HEAD = addElementToList(HEAD, rem);
+                l1 = l1->next;
+                i++;
+                continue;
+            } else {
+                cout << "[CONDITIONAL]::branch::06 -> i: " << i << ";\n";
                 break;
             }
-
-            // if ((l1->next != nullptr) && (l2->next != nullptr))
-            // {
-            //     rem = (l1->val + l2->val + temp) % 10;
-            //     temp = (l1->val + l2->val) / 10;
-            //     HEAD = addElementToList(HEAD, rem);
-            //     l1 = l1->next;
-            //     l2 = l2->next;
-            //     continue;
-            // }
-            // else if ((l1->next == nulptr) && (l2->next != nulptr))
-            // {
-            //     rem = l2->val + temp;
-            //     addElementToList(HEAD, rem);
-            //     l2 = l2->next;
-            //     temp = 0;
-            // }
-            // else if (l2->next == nulptr)
-            // {
-            //     rem = l2->val + temp;
-            //     addElementToList(HEAD, rem);
-            //     l2 = l2->next;
-            //     temp = 0;
-            // }
-            // else
-            // {
-            //     break;
-            // }
-
-            i++;
-            j++;
         }
-
-        // cout << "test1: " << 12 % 10 << "---" << 12 / 10 << endl;
-        // cout << "test2: " << 2 % 10 << "---" << 2 / 10 << endl;
-
+        
         return HEAD;
     }
 };
@@ -112,19 +132,41 @@ int main()
 
     // lp1 = &l1;
     // lp2 = &l2;
+    // 1999999999 + 9
 
+    // NORMAL CASE
+    // ListNode *lp1, *lp2;
+    // ListNode l3(3);
+    // ListNode l2(5, &l3);
+    // ListNode l1(2, &l2);
+    // ListNode l6(4);
+    // ListNode l5(6, &l6);
+    // ListNode l4(5, &l5);
+
+    // // CASE 2
+    // ListNode *lp1, *lp2;
     
+    // ListNode l1(1);
+    
+    // ListNode l6(1);
+    // ListNode l5(9, &l6);
+    // ListNode l4(9, &l5);
+    
+    // lp1 = &l1;
+    // lp2 = &l4;
+
+
     ListNode *lp1, *lp2;
-    ListNode l3(3);
-    ListNode l2(5, &l3);
-    ListNode l1(2, &l2);
-    ListNode l6(4);
-    ListNode l5(6, &l6);
-    ListNode l4(5, &l5);
+    
+    ListNode l6(2);
+    ListNode l1(9, &l6);
+    ListNode l5(7);
+    ListNode l4(3, &l5);
     
     lp1 = &l1;
     lp2 = &l4;
-    
+
+    // 73+29
 
     Solution solution;
     ListNode *lpres = solution.addTwoNumbers(lp1, lp2);
