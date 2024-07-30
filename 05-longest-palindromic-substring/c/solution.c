@@ -1,93 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-char *longestPalindrome(char *s)
-{
-    int size = strlen(s);
-    char *substr = malloc(sizeof(char) * 15);
-    int counter = 0;
-
-    for (int i = 0; i < size; i++)
-    {
-        int left = i - 1;
-        int right = i + 1;
-
-        while (1)
-        {
-            if ((left >= 0) && (right < size))
-            {
-                for (int k = 0; k < 3; k++) {
-                    substr[counter + k] = s[left + k];
-                }
-                substr[right+3] = '\t';
-                counter += right + 1;
-                printf("while|branch1: left->%d right->%d i->%d\n", left, right, i);
-            }
-            else if (left >= 0)
-            {
-                if (s[left] == s[i])
-                {
-                    printf("while|branch2-1: left->%d right->%d i->%d\n", left, right, i);
-                    break;
-                }
-                else
-                {
-                    break;
-                }
-                printf("while|branch2-2: left->%d right->%d i->%d\n", left, right, i);
-            }
-            else if (right < 0)
-            {
-                if (s[i] == s[right])
-                {
-                    printf("while|branch3-1: left->%d right->%d i->%d\n", left, right, i);
-                    break;
-                }
-                printf("while|branch3-2: left->%d right->%d i->%d\n", left, right, i);
-                break;
-            }
-            else
-            {
-                break;
-            }
-            left--;
-            right++;
-        }
-
-        // printf("%d:%c \n", i, s[i]);
-    }
-
-    // printf("string: %s\tsize: %d\n", s, size);
-
-    printf("substr: ");
-    if (substr != NULL)
-    {
-        int substr_c = 0;
-        while (1)
-        {
-            if (substr[substr_c] == '\0')
-            {
-                break;
-            }
-            printf("%c", substr[substr_c]);
-            substr_c++;
-        }
-    }
-    printf("\n");
-    return s;
-}
-
-int main(int argc, char *argv[])
-{
-    char *testCase = "babad";
-    char *result = longestPalindrome(testCase);
-
-    printf("result: %s\n", result);
-
-    return 0;
-}
-
 /*
     -------------------------
     Topics:
@@ -104,7 +14,116 @@ int main(int argc, char *argv[])
     -------------------------
     Testcases:
 
-    TESTCASE1 = "babad"             // "bab" | Explanation: "aba" is also a valid answer.
-    TESTCASE2 = "cbbd"              // "bb"  |
+    TESTCASE = "babad"              // "bab"     | Explanation: "aba" is also a valid answer.
+    TESTCASE = "cbbd"               // "bb"      |
+    TESTCASE = "ac"                 // "a"       |
+    TESTCASE = "abb"                // "bb"      |
+    TESTCASE = "tacocat"            // "tacocat" |
+    TESTCASE = "aacabdkacaa"        // "aca"     | 
+    
+    
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+char *delimitString(char *s, char *delim_s)
+{
+    int size = strlen(s);
+    const char delim = '|';
+
+    int i = 0, j = 0;
+    while (i < (size * 2 + 2))
+    {
+        if (i == (size * 2 + 1))
+        {
+            delim_s[i] = '\0';
+            break;
+        }
+
+        if (i % 2 == 0)
+        {
+            delim_s[i] = delim;
+        }
+        else
+        {
+            delim_s[i] = s[j];
+            j++;
+        }
+        i++;
+    }
+    return delim_s;
+    
+}
+char *longestPalindrome(char *s)
+{
+    //  b  a  b  a  b  a  d
+    // '|  b  |  a  |  b  |  a  |  d  |'
+    //  0  1  2  3  4  5  6  7  8  9  10
+    //  *  0  *  1  *  2  *  4  *  5  *
+    
+    int size = strlen(s);                   // the size of a string
+    int sizePlus = size * 2 + 1;            // the size of delimited string in case it is even, e. g. (abba) the center would be |a|b *|* b|a 
+    int isEven = (size % 2) ? 0 : 1;         // check if odd
+    const char delim = '|';                 // delimiter
+    int max_substr_size = 0;                // max value of substr (to find the longest)
+    
+    char *result = (char*)malloc(sizeof(char) * (sizePlus + 1));
+    
+    
+    if (size == 1) {
+        strncpy(result, s, sizeof(char) * (size + 1));
+        return result;
+    }
+
+    if (size == 2) {
+        if (s[0] == s[1]) {
+            strncpy(result, s, sizeof(char) * (size + 1));
+            return result;
+        }
+        result = (char *)realloc(result, sizeof(char) * 2);
+        for (int i = 0; i < 2; i++) {
+            result[i] = s[i];
+            if (i == 1) {
+                result[i] = '\0';
+                break;
+            }
+        }
+        return result;
+        
+    }
+    
+    // filling the original string with delimiters '|' and then we get 'superstring'
+    char *superstr = (char*)malloc(sizeof(char) * (sizePlus + 1));
+
+    if (isEven) {
+        superstr = delimitString(s, superstr);
+    } else {
+        superstr = (char*)realloc(superstr, sizeof(char) * (size + 1));
+        strncpy(superstr, s, sizeof(char) * (size + 1));
+    }
+
+    
+    printf("size of string: %d\n", size);
+    printf("superstring: %s\n", superstr);
+
+    free(superstr);
+    return result;
+}
+
+int main(int argc, char *argv[])
+{
+    // char *testCase = "aacabdkacaa";
+    // char *testCase = "babad";
+    char *testCase = "cbbd";
+    // char *testCase = "ac";
+    // char *testCase = "abb";
+    // char *testCase = "tacocat";
+    
+    char *result = longestPalindrome(testCase);
+
+    printf("result: %s\n", result);
+
+    return 0;
+}

@@ -14,10 +14,12 @@
     -------------------------
     Testcases:
 
-    TESTCASE = "babad"             // "bab" | Explanation: "aba" is also a valid answer.
-    TESTCASE = "cbbd"              // "bb"  |
-    TESTCASE = "ac"                // "a"   |
-    TESTCASE = "abb"               // "bb"  |
+    TESTCASE = "babad"              // "bab"     | Explanation: "aba" is also a valid answer.
+    TESTCASE = "cbbd"               // "bb"      |
+    TESTCASE = "ac"                 // "a"       |
+    TESTCASE = "abb"                // "bb"      |
+    TESTCASE = "tacocat"            // "tacocat" |
+    TESTCASE = "aacabdkacaa"        // "aca"     |
 
 */
 #include <iostream>
@@ -29,19 +31,10 @@ using namespace std;
 class Solution {
 public:
     string longestPalindrome(string s) {
-        string result = "";
-
-        int sSize = (int)s.size();
-        int mid = sSize / 2;
-
-        cout << "size: " << sSize << " mid: " << mid << endl;
+        // setting variables
         
-        for (int i = 0, j = (sSize - 1); i < sSize; i++, j--) {
-            int left = i - 1;
-            int right = i + 1;
-        }
 
-        return result;
+        return s;
     }
 };
 
@@ -50,8 +43,6 @@ int main(void) {
     Solution solution;
     
     string testCase = "abb";
-    // string testCase = "aa";
-    // string testCase = "tacocat";
 
     string result = solution.longestPalindrome(testCase);
 
