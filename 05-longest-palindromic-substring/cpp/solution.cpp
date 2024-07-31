@@ -25,14 +25,40 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
+using std::cout, std::string;
 
 class Solution {
 public:
+    // string *delimit_string(string s, string* delim_s) {
+        
+    //     long size = s.size() * 2 + 1;
+    //     const char delim = '|';
+
+    //     long i = 0, j = 0;
+    //     while (i < (size * 2 + 2))
+    //     {
+    //         if (i % 2 == 0)
+    //         {
+    //             *delim_s[i] = delim;
+    //         }
+    //         else
+    //         {
+    //             *delim_s[i] = s[j];
+    //             j++;
+    //         }
+    //         i++;
+    //     }
+    //     return delim_s;
+    // }
+
     string longestPalindrome(string s) {
         // setting variables
-        
+        cout << "size: " << s.size() << '\n';
+        cout << "capacity: " << s.capacity() << '\n';
+        string superstr;
+        // superstr = delimit_string(s, &superstr);
+
+        // cout << "superstr: " << superstr << '\n';
 
         return s;
     }
@@ -41,12 +67,10 @@ public:
 
 int main(void) {
     Solution solution;
-    
     string testCase = "abb";
-
     string result = solution.longestPalindrome(testCase);
 
-    std::cout << "result: " << result << std::endl;
+    cout << "result: " << result << '\n';
     
     return 0;
 }
