@@ -29,36 +29,26 @@ using std::cout, std::string;
 
 class Solution {
 public:
-    // string *delimit_string(string s, string* delim_s) {
+    string delimit_string(string& s) {
         
-    //     long size = s.size() * 2 + 1;
-    //     const char delim = '|';
+        long size = s.size() * 2 + 1;
+        s.reserve(size);
+        
 
-    //     long i = 0, j = 0;
-    //     while (i < (size * 2 + 2))
-    //     {
-    //         if (i % 2 == 0)
-    //         {
-    //             *delim_s[i] = delim;
-    //         }
-    //         else
-    //         {
-    //             *delim_s[i] = s[j];
-    //             j++;
-    //         }
-    //         i++;
-    //     }
-    //     return delim_s;
-    // }
+        long i = 0, j = 0;
+        while (i < size)
+        {
+            i++;
+        }
+        return s;
+    }
 
     string longestPalindrome(string s) {
         // setting variables
         cout << "size: " << s.size() << '\n';
         cout << "capacity: " << s.capacity() << '\n';
-        string superstr;
-        // superstr = delimit_string(s, &superstr);
 
-        // cout << "superstr: " << superstr << '\n';
+        s = delimit_string(s);
 
         return s;
     }
