@@ -4,27 +4,25 @@
     * String
     -------------------------
     Constraints:
-
     1 <= s.length <= 1000
     s consists of English letters (lower-case and upper-case), ',' and '.'
     1 <= numRows <= 1000
-
     -------------------------
     Testcases:
-
     TESTCASE: s = "PAYPALISHIRING", numRows = 3             //  "PAHNAPLSIIGYIR"
                                                             //  P   A   H   N
                                                             //  A P L S I I G
                                                             //  Y   I   R
-
     TESTCASE: s = "PAYPALISHIRING", numRows = 4             //  "PINALSIGYAHRPI"
                                                             //  P     I    N
                                                             //  A   L S  I G
                                                             //  Y A   H R
                                                             //  P     I
-
     TESTCASE: s = "A", numRows = 1                          //  "A"
-
+    TESTCASE: s = "AB", numRows = 1                         //  "AB"
+    TESTCASE: s = "AB", numRows = 2                         //  "AB"
+    TESTCASE: s = "orfefwofihmozumjkgeilldtosfnorocltisrxxbelrdhdormtaxeftuxyhosxsdtbxkyuoehfkolyfxthwympskqcaibsnutkhtevylciznigkcohccywooaoychlycvfwbcuofepuowfqmouoordfttdvapudkbzmgvclzsfpomiaccqtvvyppdmrsiufkvtqqvdrnkjbzrddtwwrtwiiaucsdwzpushmomgdyphxgmdbibucycmyxoscnutjmcvcqdgoupocbremuaqsdcsctneihzrvboyrsghmvvpyovkjvadadwcylggshzninnbhvjusglrvibgdejgjfihqrpkyoajdpkllvhfeswzaahfeqlnyuwqnlblbdwesjpdewjiohjqjqynjlchhyxulagmdcrwlgbsfmcvwomfgmtpxxyfywzjyhycmpyxxbrcowakkmpqakixkgciectdjrhvghvgiokykkkuycnymvwydagicanorwladiilxsmhfwedytenocltcsdfusvnognrrvfoqrxvpdyowedmgoijilqeelsstfmkdtatkaobforctuqbjyktmayqnqkhxytarwvdyjfdawhvrywcyhxkjvcxnpglnbnfxjkxspbuoiphimjhvgteewbrnhcajqhibugtjjqzrfgctploygteewvrgaupsbztxhohqegkmpmfezuefpiklgbrgviazktwrjfiooucdihjhdqosayegcxozgoaqjzjtgtjunlzvuleydvqdtwkxuazcpzuaafthzedorfmmqqktlcyhbigvjfzahvahawozcsouxaipsukgwipztvuebvgiqgpregqhagdzilobfajdiyddtzhwvpgnwyecexlgfofozvrgvamfarlvsuspkydiyjkegwkokpcmkvuhvipvzaquwkjglmojyzogxyuhqwvctsmoadlcfewbqfibuwnuxdaudvevtbyntmdup"
+    numrows = 620
 */
 
 #include <stdio.h>
@@ -32,7 +30,7 @@
 #include <string.h>
 
 
-int scanZigzag(char* s, int numRows)
+long scanZigzag(char* s, int numRows)
 {
     // prints zigzag in console
     int size = strlen(s);
@@ -41,7 +39,7 @@ int scanZigzag(char* s, int numRows)
     // and the last element
     int rowShift = (numRows > 2) ? numRows - 2: 0;
 
-    int i = 0, x = 0;
+    long i = 0, x = 0;
     int isSliding = 0;
 
     while (1)
@@ -80,14 +78,14 @@ int scanZigzag(char* s, int numRows)
             
             isSliding = 0;
             i += rowShift;
-            x += numRows + rowShift;
+            x += numRows * rowShift;
         }    
         else {
             for (int j = 0; j < numRows; j++)
                 {
                     if ((i + j) < size)
                     {
-                        printf("%c\t", s[i+j]);
+                        printf("%c\t", s[i + j]);
                         continue;
                     } else {
                         printf("*\t");
@@ -102,8 +100,8 @@ int scanZigzag(char* s, int numRows)
     }
 
     printf("-------------------------------\n");
-    printf("func:scanZigzag: x:%d\ti:%d\n", x, i);
-    return ((x + numRows) / numRows);
+    printf("func:scanZigzag: x:%ld\ti:%ld\n", x, i);
+    return (x / numRows);
 }
 
 void fill2dArr(char* s, char* charArr, int numRows)
@@ -111,7 +109,7 @@ void fill2dArr(char* s, char* charArr, int numRows)
     int size = strlen(s);
     int rowShift = (numRows > 2) ? numRows - 2: 0;
     
-    int i = 0, x = 0;
+    long i = 0, x = 0;
     int isSliding = 0;
 
     while (1)
@@ -160,51 +158,44 @@ void fill2dArr(char* s, char* charArr, int numRows)
     }
 }
 
-void transFill2dArr(char* charArr, char* resultStr, int numRows, int numCols)
-//   transFill2dArr(char* charArr, char* resultStr, -----4-----  ------6----)
+void transFill2dArr(char* charArr, char* resultStr, int numRows, long numCols)
 {
-    int x = 0;
-   
+    long x = 0;
+    
     for (int j = 0; j < numRows; j++)
     {
-        for (int i = 0; i < numCols; i++)
+        for (long i = 0; i < numCols; i++)
         {
-            // if ((j == (numRows - 1)) && (i == (numCols - 1))) {
-            //     resultStr[x] = '\0';
-            //     break;
-            // }
-            if ((i * numRows + j) == (numRows * numCols)) {
-                resultStr[x] = '\0';
-                break;
-            }
-            else if (charArr[i * numRows + j] == '*') {
+            if (charArr[i * numRows + j] == '*') {
                 continue;
             }
             else {
-                
-                printf("\tTESTING: x: %d\t(i * numRows + j): %d\n", x, (i * numRows + j));
                 resultStr[x] = charArr[i * numRows + j];
                 x += 1;
             }
         }
     }
+    resultStr[x] = '\0';
 }
 
 char* convert(char* s, int numRows) {
     int size = strlen(s);
-    int numCols = scanZigzag(s, numRows);
-
+    long numCols = scanZigzag(s, numRows);
     char* targetArr = (char *)malloc(sizeof(char) * ((numRows * numCols) + 1));
     char* resultStr = (char *)malloc(sizeof(char) * ((size) + 1));
 
+    if (numRows == 1) {
+        return s;
+    }
+
     fill2dArr(s, targetArr, numRows);
     transFill2dArr(targetArr, resultStr, numRows, numCols);
-    resultStr = realloc(resultStr, sizeof(char) * (size));
 
     printf("-------------------------------\n");
     printf("fill2dArr: %s\n", targetArr);
+    printf("len(fill2dArr): %d\n", (int)strlen(targetArr));
     printf("-------------------------------\n");
-    printf("numRows: %d\tnumCols: %d\tresultStr: %s\n", numRows, numCols, resultStr);
+    printf("numRows: %d\tnumCols: %ld\tresultStr: %s\n", numRows, numCols, resultStr);
     printf("strlen(resultStre): %d\n", (int)strlen(resultStr));
 
     free(targetArr);
@@ -213,11 +204,9 @@ char* convert(char* s, int numRows) {
 
 int main(int argc, char* argv[])
 {
-    int numRows = 4;
+    int numRows = 3;
     char* testCase = "PAYPALISHIRING";
-
     char* result = convert(testCase, numRows);
-    printf("\nresult: %s\n", result);
-
+    printf("\nsize: %d\tresult: %s\n", (int)strlen(testCase), result);
     return 0;
 }
