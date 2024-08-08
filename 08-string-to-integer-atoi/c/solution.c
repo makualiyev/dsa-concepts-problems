@@ -238,6 +238,7 @@ int myAtoi(char* s) {
 
     result = intAtoi(strippedS, &isMinusSigned);
     printf("Stripped string: %s\n", strippedS);
+    free(strippedS);
     return result;
 }
 
