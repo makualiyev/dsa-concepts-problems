@@ -29,128 +29,126 @@
     Input: s = "a", p = "ab*"                       // Output: true
     Input: s = "a", p = ".*..a*"                    // Output: false
     Input: s = "aab", p = "c*a*b"                   // Output: true
+    Input: s = "aaa", p = "ab*ac*a"                 // Output: true
     Input: s = "aaa", p = "ab*a*c*a"                // Output: true
 
-*/
+*/ 
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
-int patternMatch(int caret, char *s, char pattern, int isAsterisk, int *simpleCheck)
-{
-    int i = caret;
 
-    if (isAsterisk)
+char *patternMatch(char *s, char p)
+{
+    int i = strlen(s) - 1;
+    while (i >= 0)
     {
-        
-        while (i >= 0)
+        if (s[i] == p)
         {
-            if (pattern == '.') {
-                i--;
-                continue;
-            }
-            if (s[i] == pattern)
-            {
-                i--;
-                continue;
-            }
+            i--;
+            continue;
+        } else if (p == '.') {
+            i--;
+            continue;
+        } else {
             break;
         }
     }
-    else
-    {
-        if (pattern == '.') {
-            i--;
-            return i;
-        }
-        else if (s[i] == pattern)
-        {
-            i--;
-            return i;
-        } else {
-            *simpleCheck = 1;
-        }
+    if (i == (strlen(s) - 1)) {
+        return s;
     }
-    return i;
+
+    i = i < 0 ? 0 : i;
+
+    if (i == 0)
+    {
+        char *newS = malloc(sizeof(char));
+        newS[0] = '\0';
+        printf("\t\t\tpattern: %c, i: %d, newS: %s \n", p, i, newS);
+        return newS;
+    }
+
+    char *newS = malloc(sizeof(char) * (i + 1 + 1));
+    newS = strncpy(newS, s, sizeof(char) * (i + 1));
+    newS[i + 1] = '\0';
+
+    printf("\t\tpattern: %c, i: %d, newS: %s \n", p, i, newS);
+
+    return newS;
 }
+
+char *simpleMatch(char *s, char p)
+{
+    int i = strlen(s) - 1;
+    
+    if (s[i] == p) {
+        i--;
+    } else if (p == '.') {
+        i--;
+    } else {
+        printf("simple match failed!");
+        return s;
+    }
+
+    if (i < 0)
+    {
+        char *newS = malloc(sizeof(char));
+        newS[0] = '\0';
+        printf("\t\t\t simple: %c, i: %d, newS: %s \n", p, i, newS);
+        return newS;
+    }
+
+    char *newS = malloc(sizeof(char) * (i + 1 + 1));
+    newS = strncpy(newS, s, sizeof(char) * (i + 1));
+    newS[i + 1] = '\0';
+
+    printf("\t\tsimple: %c, i: %d, newS: %s \n", p, i, newS);
+    return newS;
+}
+
 
 bool isMatch(char *s, char *p)
 {
-    int asteriskCount = 0;
-    int simpleCount = 0;
-    int patternLen = (int)strlen(p);
-    int caret = (int)strlen(s) - 1;
-    int simpleCheck = 0;                // true if simple pattern matching fails
+    int i = strlen(p) - 1;
+    int j = i - 1;
+    char* nes = malloc(sizeof(char) * (strlen(s) + 1));
+    nes = strcpy(nes, s);
 
-    for (int i = patternLen - 1, j = patternLen - 2; i >= 0; i -= 1, j = i - 1)
+    while (i >= 0)
     {
-        printf("\tloop started -> i:%d, caret:%d\n", i, caret);   
-        if (caret < 0)
-        {
-            printf("\tcaret ended\n");
-            if (p[i] == '*')
+        int prevLen = strlen(nes);
+
+        if (p[i] == '*') {
+            printf("found pattern:%c\n", p[j]);
+            nes = patternMatch(nes, p[j]);
+            if (strlen(nes) == 0)
             {
-                asteriskCount++;
+                printf("DEBUG-zerostrlen\n");
             }
-            break;
+            i = j - 1;
+            j = i - 1;
+            continue;
         }
-        if (j < 0)
+        printf("found simplt:%c\n", p[i]);
+        if (strlen(nes) == 0)
         {
-            simpleCount++;
-            caret = patternMatch(caret, s, p[i], 0, &simpleCheck);
-            printf("\tloop breaks -> i:%d, caret:%d, simpleCheck:%d\n", i, caret, simpleCheck);
-            break;
+            return false;
         }
-        if (p[i] == '*')
-        {
-            printf("\t\tfound pattern -> i:%d, j:%d, pattern:%c, simpleCheck:%d\n", i, j, p[j], simpleCheck);
-            asteriskCount++;
-            if (i == j) {
-                caret = patternMatch(caret, s, p[j - 1], 1, &simpleCheck);
-            } else {
-                caret = patternMatch(caret, s, p[j], 1, &simpleCheck);
-            }
-
-            if (j == (patternLen - 1)) {
-                i = j - 1;
-            } else {
-                i = j;
-            }
-            
-            printf("\t\t end found pattern -> i:%d, caret:%d, simpleCheck:%d\n", i, caret, simpleCheck);
+        nes = simpleMatch(nes, p[i]);
+        if (prevLen == strlen(nes)) {
+            return false;
         }
-        else
-        {
-            simpleCount++;
-            caret = patternMatch(caret, s, p[i], 0, &simpleCheck);
-            printf("\t\tfound nonpattern -> i:%d, caret:%d, simpleCheck:%d\n", i, caret, simpleCheck);
-        }
+        i--;
+        j--;
     }
 
-    printf("\n(asteriskCount + simpleCount):%d\n", (asteriskCount * 2 + simpleCount));
-
-
-    if ((asteriskCount * 2 + simpleCount) < strlen(p)) {
-        return false;
-    }
-
-    if ((asteriskCount == 0) && (strlen(p) > strlen(s)))
-    {
-        return false;
-    }
-
-    if (simpleCheck)
-    {
+    if (strlen(nes) > 0) {
         return false;
     }
     
-    if (caret >= 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return true;
 }
 
 int main(int argc, char *argv[])
@@ -158,16 +156,17 @@ int main(int argc, char *argv[])
     // char *testCaseS = "mississippi";
     // char *testCaseP = "mis*is*ip*.";
     // char *testCaseS = "aa";
+    // char *testCaseP = "a";
     // char *testCaseP = "a*";
     // char *testCaseS = "a";
     // char *testCaseP = ".*..a*";
 
     char *testCaseS = "aaa";
-    char *testCaseP = "ab*a*c*a";
+    char *testCaseP = "ab*ac*a";
 
     bool result = isMatch(testCaseS, testCaseP);
 
     printf("======================\n");
-    printf("\ntestCase\n\ts:%s\tp:%s\nresult:\t%s\n", testCaseS, testCaseP, (result ? "true" : "false"));
+    printf("testCase\n\ts:%s\tp:%s\nresult:\t%s\n", testCaseS, testCaseP, (result ? "true" : "false"));
     return 0;
 }
