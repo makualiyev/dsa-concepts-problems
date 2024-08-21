@@ -31,6 +31,8 @@
     Input: s = "aab", p = "c*a*b"                   // Output: true
     Input: s = "aaa", p = "ab*ac*a"                 // Output: true
     Input: s = "aaa", p = "ab*a*c*a"                // Output: true
+    Input: s = "aaa", p = "aaaa"                    // Output: false
+    Input: s = "a",   p = "ab*a"                    // Output: false
 
 */ 
 
@@ -40,129 +42,76 @@
 #include <string.h>
 
 
-char *patternMatch(char *s, char p)
+struct PatternNode {
+    char pattern;
+    int isAsterisk;
+    struct PatternNode *next;
+};
+
+
+void printPattern(struct PatternNode *head)
 {
-    int i = strlen(s) - 1;
-    while (i >= 0)
+    int i = 0;
+    while (1)
     {
-        if (s[i] == p)
-        {
-            i--;
-            continue;
-        } else if (p == '.') {
-            i--;
-            continue;
-        } else {
+        if (head == NULL) {
             break;
         }
+        printf("%d->%c:%d\n", i, head->pattern, head->isAsterisk);
+        head = head->next;
+        i++;
     }
-    if (i == (strlen(s) - 1)) {
-        return s;
-    }
-
-    i = i < 0 ? 0 : i;
-
-    if (i == 0)
-    {
-        char *newS = malloc(sizeof(char));
-        newS[0] = '\0';
-        printf("\t\t\tpattern: %c, i: %d, newS: %s \n", p, i, newS);
-        return newS;
-    }
-
-    char *newS = malloc(sizeof(char) * (i + 1 + 1));
-    newS = strncpy(newS, s, sizeof(char) * (i + 1));
-    newS[i + 1] = '\0';
-
-    printf("\t\tpattern: %c, i: %d, newS: %s \n", p, i, newS);
-
-    return newS;
 }
 
-char *simpleMatch(char *s, char p)
+struct PatternNode *addPatternNode(struct PatternNode *head, char pattern, int isAsterisk)
 {
-    int i = strlen(s) - 1;
-    
-    if (s[i] == p) {
-        i--;
-    } else if (p == '.') {
-        i--;
-    } else {
-        printf("simple match failed!");
-        return s;
-    }
-
-    if (i < 0)
+    if (head == NULL)
     {
-        char *newS = malloc(sizeof(char));
-        newS[0] = '\0';
-        printf("\t\t\t simple: %c, i: %d, newS: %s \n", p, i, newS);
-        return newS;
+        head = malloc(sizeof(struct PatternNode*));
+        head->pattern = pattern;
+        head->isAsterisk = isAsterisk;
+        head->next = NULL;
+    } else  {
+        struct PatternNode *node = malloc(sizeof(struct PatternNode*));
+        node->next = head;
+        head = node;
     }
-
-    char *newS = malloc(sizeof(char) * (i + 1 + 1));
-    newS = strncpy(newS, s, sizeof(char) * (i + 1));
-    newS[i + 1] = '\0';
-
-    printf("\t\tsimple: %c, i: %d, newS: %s \n", p, i, newS);
-    return newS;
+    return head;
 }
 
-
-bool isMatch(char *s, char *p)
+struct PatternNode *getPatternNodes(struct PatternNode *head, char *pattern)
 {
-    int i = strlen(p) - 1;
+    int i = strlen(pattern) - 1;
     int j = i - 1;
-    char* nes = malloc(sizeof(char) * (strlen(s) + 1));
-    nes = strcpy(nes, s);
-
     while (i >= 0)
     {
-        int prevLen = strlen(nes);
-
-        if (p[i] == '*') {
-            printf("found pattern:%c\n", p[j]);
-            nes = patternMatch(nes, p[j]);
-            if (strlen(nes) == 0)
-            {
-                printf("DEBUG-zerostrlen\n");
-            }
+        if (pattern[i] == '*')
+        {
+            head = addPatternNode(head, pattern[j], 1);
             i = j - 1;
             j = i - 1;
             continue;
         }
-        printf("found simplt:%c\n", p[i]);
-        if (strlen(nes) == 0)
-        {
-            return false;
-        }
-        nes = simpleMatch(nes, p[i]);
-        if (prevLen == strlen(nes)) {
-            return false;
-        }
+        head = addPatternNode(head, pattern[i], 0);
         i--;
         j--;
     }
+    return head;
+}
 
-    if (strlen(nes) > 0) {
-        return false;
-    }
+bool isMatch(char *s, char *p)
+{
+    struct PatternNode* patternHead = NULL;
+    patternHead = getPatternNodes(patternHead, p);
+    printPattern(patternHead);
     
     return true;
 }
 
 int main(int argc, char *argv[])
 {
-    // char *testCaseS = "mississippi";
-    // char *testCaseP = "mis*is*ip*.";
-    // char *testCaseS = "aa";
-    // char *testCaseP = "a";
-    // char *testCaseP = "a*";
-    // char *testCaseS = "a";
-    // char *testCaseP = ".*..a*";
-
     char *testCaseS = "aaa";
-    char *testCaseP = "ab*ac*a";
+    char *testCaseP = "ab*a*c*a";
 
     bool result = isMatch(testCaseS, testCaseP);
 
