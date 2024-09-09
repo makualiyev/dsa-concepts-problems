@@ -24,7 +24,23 @@
 #include <stdio.h>
 
 int maxArea(int* height, int heightSize) {
-    return heightSize;
+    int maxArea = 0;
+
+    for (int i = 0; i < heightSize; i++)
+    {
+        printf("i:%d\n", i);
+        for (int j = i + 1; j < heightSize; j++)
+        {
+            int area = ((height[j] - height[i]) < 0? height[j]: height[i]) * (j - i);
+            if (area > maxArea) {
+                maxArea = area;
+            }
+            printf("\tj:%d, area:%d\n", j, area);
+        }
+        
+    }
+
+    return maxArea;
 }
 
 int main(int argc, char *argv[])
