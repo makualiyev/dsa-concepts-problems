@@ -80,20 +80,11 @@ bool isMatch(char *s, char *p)
     // length?
     // TOP down memoization?
     // backtracking?
-    struct TreeNode *root = createTreeNode("1");
-    struct TreeNode *n_1_1 = createTreeNode("1.1");
-    struct TreeNode *n_1_2 = createTreeNode("1.2");
-    struct TreeNode *n_1_1_1 = createTreeNode("1.1.1");
-    struct TreeNode *n_1_1_2 = createTreeNode("1.1.2");
-
-    root->left = n_1_1;
-    root->right = n_1_2;
-    n_1_1->left = n_1_1_1;
-    n_1_1->right = n_1_1_2;
-
-    printTree(root, 0);
-
-
+    
+    // two pointers for `s` and `p`
+    int i = 0;
+    int j = 0;
+    
     return true;
 }
 
