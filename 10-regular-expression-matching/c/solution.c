@@ -47,43 +47,42 @@
 #include <string.h>
 
 
-struct TreeNode {
-    char* value;
-    struct TreeNode* left;
-    struct TreeNode* right;
-};
-
-struct TreeNode *createTreeNode(char* value) {
-    struct TreeNode *result = malloc(sizeof(struct TreeNode));
-    if (result != NULL) {
-        result->left = NULL;
-        result->right = NULL;
-        result->value = value;
-    }
-    return result;
-}
-
-void printTree(struct TreeNode *root, int level)
-{
-    if (root == NULL)
-                return;
-        for (int i = 0; i < level; i++)
-                printf(i == level - 1 ? "|-" : "  ");
-        printf("%s\n", root->value);
-        printTree(root->left, level + 1);
-        printTree(root->right, level + 1);
-}
+// bool matchStar(char *s, char *p, int *i, int *j)
+// {
+//     return false
+// }
 
 bool isMatch(char *s, char *p)
-{
-    // decisionTree?
-    // length?
-    // TOP down memoization?
-    // backtracking?
-    
-    // two pointers for `s` and `p`
-    int i = 0;
-    int j = 0;
+{    
+    int matched = 0;
+    int i = 0, j = 0;
+    while (true)
+    {
+        if ((i >= strlen(s)) && (j >= strlen(p)))
+            return true;
+        if (j >= strlen(p))
+            return false;
+        
+        if ((j < strlen(p) - 1) && (p[j + 1] == '*'))
+        {
+
+            i++;                // FIXME
+            j++;                // FIXME
+            continue;           // FIXME
+        }
+        else if ((p[j] == '.') || (s[i] == p[j])) {
+            i++;
+            j++;
+            continue;
+        }
+        else {
+            return false;
+        }
+
+        i++;
+        j++;
+    }
+
     
     return true;
 }
@@ -134,13 +133,13 @@ int main(int argc, char *argv[])
     // char *testCaseP = "ab.*de";
     // // Output: true
 
-    char *testCaseS = "aa";
-    char *testCaseP = "a";
-    // Output: false
+    // char *testCaseS = "aa";
+    // char *testCaseP = "a";
+    // // Output: false
 
-    // char *testCaseS = "aaa";
-    // char *testCaseP = "a*a";
-    // // Output: true
+    char *testCaseS = "aaa";
+    char *testCaseP = "a*a";
+    // Output: true
 
     // char *testCaseS = "aabcbcbcaccbcaabc";
     // char *testCaseP = ".*a*aa*.*b*.c*.*a*";
