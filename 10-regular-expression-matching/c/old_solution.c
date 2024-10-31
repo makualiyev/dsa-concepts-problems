@@ -377,13 +377,13 @@ int main(int argc, char *argv[])
     // char *testCaseP = "a";
     // // Output: false
 
-    // char *testCaseS = "aaa";
-    // char *testCaseP = "a*a";
-    // // Output: true
-
-    char *testCaseS = "aabcbcbcaccbcaabc";
-    char *testCaseP = ".*a*aa*.*b*.c*.*a*";
+    char *testCaseS = "aaa";
+    char *testCaseP = "a*a";
     // Output: true
+
+    // char *testCaseS = "aabcbcbcaccbcaabc";
+    // char *testCaseP = ".*a*aa*.*b*.c*.*a*";
+    // // Output: true
 
     // char *testCaseS = "aaca";
     // char *testCaseP = "ab*a*c*a";
