@@ -13,4 +13,6 @@
 1. Parse the regex string into tokens of states? or just patterns.
 2. BACKTRACKING
 
+## regex to DFA 
+![regex to dfa](resources/dfa.png)
 

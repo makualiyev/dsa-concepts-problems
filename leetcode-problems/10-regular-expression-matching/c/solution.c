@@ -47,11 +47,6 @@
 #include <string.h>
 
 
-// bool matchStar(char *s, char *p, int *i, int *j)
-// {
-//     return false
-// }
-
 bool isMatch(char *s, char *p)
 {    
     int matched = 0;
