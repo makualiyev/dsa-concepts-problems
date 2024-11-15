@@ -1,14 +1,34 @@
-# Computer Science (DSA / LeetCode)
+# Computer Science concepts (DSA / LeetCode)
 
-This repository is mainly for learning purposes.
+This repository is for learning purposes. 
 
-* Options for different problems/languages:
-    * C++
-        * Regular compile options:
-            * g++ -o solution -Wall -pedantic (-O2)
-        * Specific for problems:
-            * 02 Add two numbers:
-                * compile options: clang -std=c++23 -O2 -Wall -pedantic
-    * C
-        * regular compiler flags:
-            * gcc -o solution -Wall -pedantic 
+
+
+## LeetCode problems
+| # | Title | Solution | Difficulty | Topics |
+|---| ----- | -------- | ---------- | ---------- |
+|0001|[Two Sum](https://leetcode.com/problems/two-sum/)| [C](./leetcode-problems/0001-two-sum/c/solution.c), [C++](./leetcode-problems/0001-two-sum/cpp/solution.cpp)|✅ Easy|
+|0002|[Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)| [C++](./leetcode-problems/0002-add-two-numbers/cpp/solution.cpp)|✅ Medium|
+|0003|[Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)| [C++](./leetcode-problems/0003-longest-substring-without-repeating-characters/cpp/solution.cpp)|✅ Medium|
+|0004|[Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)| [C++](./leetcode-problems/0004-median-of-two-sorted-arrays/cpp/solution.cpp)|✅ Hard|
+|0005|[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)| [C](./leetcode-problems/0005-longest-palindromic-substring/c/solution.c)|✅ Medium|
+|0006|[ZigZag Conversion](https://leetcode.com/problems/zigzag-conversion/)| [C](./leetcode-problems/0006-zigzag-conversion/c/solution.c)|✅ Easy|
+|0007|[Reverse Integer](https://leetcode.com/problems/reverse-integer/)| [C](./leetcode-problems/0007-reverse-integer/c/solution.c)|✅ Easy|
+|0008|[String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi/)| [C](./leetcode-problems/0008-string-to-integer-atoi/c/solution.c)|✅ Easy|
+|0009|[Palindrome Number](https://leetcode.com/problems/palindrome-number/)| [C++](./leetcode-problems/0009-palindrome-number/cpp/solution.cpp)|✅ Easy|
+|0010|[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)| |Hard|
+|0011|[Container With Most Water](https://leetcode.com/problems/container-with-most-water/)| |Medium|
+|0013|[Roman to Integer](https://leetcode.com/problems/roman-to-integer/)| [Python](./leetcode-problems/0013-roman-to-integer/py/solution.py)|✅ Easy|
+|0014|[Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)| [C](./leetcode-problems/0014-longest-common-prefix/c/solution.c)|✅ Easy|
+|0020|[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)| [C](./leetcode-problems/0020-valid-parentheses/c/solution.c)|✅ Easy|
+|0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| |Easy| `Linked List`, `Recursion`|
+|0022|[Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)| |Medium|
+|0094|[Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)| |Easy|
+
+
+<!-- |0012|[Integer to Roman](https://leetcode.com/problems/integer-to-roman/)| |Medium| -->
+<!-- |0015|[3Sum](https://leetcode.com/problems/3sum/)| [C++](./algorithms/cpp/3Sum/3Sum.cpp)|Medium| -->
+<!-- |0016|[3Sum Closest](https://leetcode.com/problems/3sum-closest/)| [C++](./algorithms/cpp/3SumClosest/3SumClosest.cpp)|Medium| -->
+<!-- |0017|[Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)| [C++](./algorithms/cpp/letterCombinationsOfAPhoneNumber/letterCombinationsOfAPhoneNumber.cpp)|Medium| -->
+<!-- |0018|[4Sum](https://leetcode.com/problems/4sum/)| [C++](./algorithms/cpp/4Sum/4Sum.cpp)|Medium| -->
+<!-- |0019|[Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)| [C++](./algorithms/cpp/removeNthNodeFromEndOfList/removeNthNodeFromEndOfList.cpp), [Python](./algorithms/python/RemoveNthNodeFromEndOfList/removeNthFromEnd.py)|Easy| -->

@@ -40,7 +40,7 @@ public:
 int main(void) {
     Solution solution;
 
-    // string resStr = "bbtablud";
+    string resStr = "bbtablud";
     // string resStr = "abcabcbb"; // 3
     // string resStr = "bbbbb"; // 1 
     // string resStr = "pwwkew"; // 3

@@ -31,24 +31,32 @@ struct ListNode {
 };
 
 void printList(struct ListNode* head) {
-    while (head->next)
-    {
-        printf("%d->", head->val);
+    struct ListNode* node = head;
+    
+    while (1) {
+        if (node == NULL)
+            break;
+        printf("->%d", node->val);
+        node = node->next;
     }
     printf("\n");
+
+    free(node);
 }
 
 struct ListNode* addNode(struct ListNode* head, int val) {
 
     struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
-    if (head == NULL) {        
-        head->next = newNode;
-        newNode->val = val;
+    if (head == NULL) {
+        head = newNode;
         newNode->next = NULL;
+        newNode->val = val;
     } else {
-        return head;
+        newNode->val = val;
+        newNode->next = head;
+        (newNode->next)->next = NULL;
+        head = newNode;
     }
-
     return head;
 }
 
@@ -60,7 +68,7 @@ struct ListNode* addNode(struct ListNode* head, int val) {
  * };
  */
 struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
-    return list1;
+    return list2;
 }
 
 int main(int argc, char *argv[])
@@ -76,11 +84,10 @@ int main(int argc, char *argv[])
     list2 = addNode(list2, 3);
     list2 = addNode(list2, 4);
 
-    
     struct ListNode* result = mergeTwoLists(list1, list2);
     printf("\n======================\n");
     printf("testCase\n\tn: %d\n======================\nresult:\t", 1);
-    printResult(result);
+    printList(result);
     printf("\n");
     return 0;
 }
