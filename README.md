@@ -24,6 +24,7 @@ This repository is for learning purposes.
 |0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| |Easy| `Linked List`, `Recursion`|
 |0022|[Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)| |Medium|
 |0094|[Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)| |Easy|
+|0203|[Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)| |Easy| `Linked List`, `Recursion`|
 
 
 <!-- |0012|[Integer to Roman](https://leetcode.com/problems/integer-to-roman/)| |Medium| -->

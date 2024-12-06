@@ -16,6 +16,8 @@ typedef struct {
     point move[NCELLS + 1];                 /* how many open squares remain? */
 } boardtype;
 
+bool finished = false;                                  /* found all solutions yet? */
+
 
 void printBoard(boardtype *board)
 {
@@ -71,6 +73,12 @@ void construct_candidates(int a[], int k, boardtype *board, int c[], int *ncandi
         }
     }
 
+}
+
+void process_solution(int a[], int k, boardtype *board)
+{
+    printBoard(board);
+    finished = true;
 }
 
 int main(int argc, char *argv[])
