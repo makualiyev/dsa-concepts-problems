@@ -60,25 +60,71 @@ void printListRecur(struct ListNode* head)
 
 struct ListNode* reverseListRecur(struct ListNode* head)
 {
+    /**
+     * here we have `head` - which is let's say (4)->(NULL)
+     * and `newHead` which is (NULL) i.e. (4)->next. Thus
+     * now we have two successive nodes (4)->(NULL) for last
+     * function call stack. So, for next one it would be
+     * `head` (3)->(4) `newHead` (4)->(NULL)
+     * or
+     * `head` (3) `newHead` (4)
+     * Then the solution lies in reversing the link from (4)
+     * to (
+     */
     if (head == NULL) {
         return head;
     }
-    reverseListRecur(head->next);
-    // struct ListNode* newHead = (struct ListNode*)malloc(sizeof(*newHead));
-    return head;
+
+    struct ListNode* newHead = reverseListRecur(head->next);
+    if (head->next == NULL) {
+        return head;
+    } 
+
+    struct ListNode* temp1;
+    struct ListNode* temp2;
+    temp1 = newHead;
+    temp2 = head;
+    while (temp1->next != NULL) {
+        temp1 = temp1->next;
+    }
+    temp2->next = NULL;
+    temp1->next = temp2;
+    
+    return newHead;
 }
 
-struct ListNode* reverseList(struct ListNode* head)
+void reverseListRecurNoret(struct ListNode* head)
 {
-    struct ListNode* temp;
-    struct ListNode* reversed = (struct ListNode*)malloc(sizeof(*reversed));
-    temp = head;
-
-    while (temp != NULL) {
-        temp = temp->next;
+    /**
+     * here we have `head` - which is let's say (4)->(NULL)
+     * and `newHead` which is (NULL) i.e. (4)->next. Thus
+     * now we have two successive nodes (4)->(NULL) for last
+     * function call stack. So, for next one it would be
+     * `head` (3)->(4) `newHead` (4)->(NULL)
+     * or
+     * `head` (3) `newHead` (4)
+     * Then the solution lies in reversing the link from (4)
+     * to (
+     */
+    if (head == NULL) {
+        return;
     }
+
+    reverseListRecurNoret(head->next);
     
-    return head;
+    struct ListNode* newHead;
+    if (head->next == NULL) {
+        newHead = head;
+    } else {
+        printf("newHead\t%d\n", newHead->val);
+        struct ListNode* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+
+
+    }
+
 }
 
 
@@ -86,16 +132,19 @@ struct ListNode* reverseList(struct ListNode* head)
 int main(int argc, char *argv[])
 {
     struct ListNode *head = NULL;
-    struct ListNode *headRev = NULL;
+    // struct ListNode *headRev = NULL;
     head = addNode(head, 1);
     head = addNode(head, 2);
     head = addNode(head, 3);
     head = addNode(head, 4);
 
     printListRecur(head);
-    headRev = reverseListRecur(head);
+    reverseListRecurNoret(head);
     printf("\n");
-    printListRecur(headRev);
+    // printListRecur(headRev);
+    // printf("\n");
+    // printf("\n");
+    printListRecur(head);
     printf("\n");
 
     return 0;
