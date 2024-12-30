@@ -121,8 +121,6 @@ void reverseListRecurNoret(struct ListNode* head)
         while (temp->next != NULL) {
             temp = temp->next;
         }
-
-
     }
 
 }

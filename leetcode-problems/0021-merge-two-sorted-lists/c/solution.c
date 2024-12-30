@@ -83,8 +83,31 @@ struct ListNode* addNode(struct ListNode* head, int val) {
 
 struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
     // merging two linked lists ?
-    
-    return list1;
+    struct ListNode* temp1 = list1;
+    struct ListNode* temp2 = list2;
+    struct ListNode* merged = NULL;
+
+    while ((temp1 != NULL) && (temp2 != NULL)) {
+
+        if (temp1->val <= temp2->val) {
+            merged = addNode(merged, temp1->val);
+            temp1 = temp1->next;
+        } else {
+            merged = addNode(merged, temp2->val);
+            temp2 = temp2->next;
+        }
+    }
+
+    while (temp1 != NULL) {
+        merged = addNode(merged, temp1->val);
+        temp1 = temp1->next;
+    }
+    while (temp2 != NULL) {
+        merged = addNode(merged, temp2->val);
+        temp2 = temp2->next;
+    }
+
+    return merged;
 }
 
 int main(int argc, char *argv[])
@@ -94,8 +117,7 @@ int main(int argc, char *argv[])
     struct ListNode* list1 = NULL;
     struct ListNode* list2 = NULL;
     list1 = addNode(list1, 5);
-    // list1 = addNode(list1, 2);
-    // list1 = addNode(list1, 4);
+    
     list2 = addNode(list2, 1);
     list2 = addNode(list2, 2);
     list2 = addNode(list2, 4);
