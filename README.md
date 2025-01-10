@@ -21,8 +21,9 @@ This repository is for learning purposes.
 |0013|[Roman to Integer](https://leetcode.com/problems/roman-to-integer/)| [Python](./leetcode-problems/0013-roman-to-integer/py/solution.py)|✅ Easy|
 |0014|[Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)| [C](./leetcode-problems/0014-longest-common-prefix/c/solution.c)|✅ Easy|
 |0020|[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)| [C](./leetcode-problems/0020-valid-parentheses/c/solution.c)|✅ Easy|
-|0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| |Easy| `Linked List`, `Recursion`|
+|0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| [C](./leetcode-problems/0021-merge-two-sorted-lists/c/solution.c)|✅ Easy| `Linked List`, `Recursion`|
 |0022|[Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)| |Medium|
+|0024|[Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)| |Medium| `Linked List`, `Recursion`|
 |0094|[Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)| |Easy|
 |0203|[Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)| |Easy| `Linked List`, `Recursion`|
 

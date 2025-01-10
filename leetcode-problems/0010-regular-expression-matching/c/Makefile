@@ -1,12 +1,2 @@
-
-CC=gcc
-CFLAGS=-g -Wall -pedantic
-BINS=solution
-
-all: %(BINS)
-
-%: %.c
-	%(CC) %(CFLAGS) %^ -o $@
-
-clean:
-	$(RM) $(BINS)
+solution: solution.c
+	$(CC) solution.c -o solution -Wall -Wextra -pedantic -std=c99 -g

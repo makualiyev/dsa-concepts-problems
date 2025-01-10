@@ -46,114 +46,27 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 bool isMatch(char *s, char *p)
-{    
-    int matched = 0;
+{
     int i = 0, j = 0;
-    while (true)
-    {
-        if ((i >= strlen(s)) && (j >= strlen(p)))
-            return true;
-        if (j >= strlen(p))
-            return false;
-        
-        if ((j < strlen(p) - 1) && (p[j + 1] == '*'))
-        {
 
-            i++;                // FIXME
-            j++;                // FIXME
-            continue;           // FIXME
-        }
-        else if ((p[j] == '.') || (s[i] == p[j])) {
-            i++;
-            j++;
-            continue;
-        }
-        else {
-            return false;
-        }
-
-        i++;
-        j++;
+    while ((i < (int)strlen(s)) && (j < (int)strlen(p))) {
+        printf("s[%d]: %c\tp[%d]: %c\n", i, s[i], j, p[j]);
+        i++, j++;
     }
 
-    
     return true;
-}
-
-void matchCases(void)
-{
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aa", "a") ? "true" : "false", "false", "aa", "a");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aa", "a*") ? "true" : "false", "true", "aa", "a*");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("ab", ".*") ? "true" : "false", "true", "ab", ".*");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aab", "c*a*b") ? "true" : "false", "true", "aab", "c*a*b");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("mississippi", "mis*is*ip*.") ? "true" : "false", "true", "mississippi", "mis*is*ip*.");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("ab", ".*c") ? "true" : "false", "false", "ab", ".*c");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aaa", "aaaa") ? "true" : "false", "false", "aaa", "aaaa");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("a", "ab*") ? "true" : "false", "true", "a", "ab*");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("a", ".*..a*") ? "true" : "false", "false", "a", ".*..a*");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aab", "c*a*b") ? "true" : "false", "true", "aab", "c*a*b");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aaa", "ab*ac*a") ? "true" : "false", "true", "aaa", "ab*ac*a");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aaa", "aaaa") ? "true" : "false", "false", "aaa", "aaaa");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("a", "ab*a") ? "true" : "false", "false", "a", "ab*a");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aaa", "ab*a*c*a") ? "true" : "false", "true", "aaa", "ab*a*c*a");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("abcdede", "ab.*de") ? "true" : "false", "true", "abcdede", "ab.*de");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aaa", "a*a") ? "true" : "false", "true", "aaa", "a*a");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aabcbcbcaccbcaabc", ".*a*aa*.*b*.c*.*a*") ? "true" : "false", "true", "aabcbcbcaccbcaabc", ".*a*aa*.*b*.c*.*a*");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("aaca", "ab*a*c*a") ? "true" : "false", "true", "aaca", "ab*a*c*a");
-    printf("r:%s\te:%s\ts:%s p:%s\t\n", isMatch("bbbba", ".*a*a") ? "true" : "false", "true", "bbbba", ".*a*a");
-
-    //  a   a   b   c   b   c   b   c   a   c   c   b   c   a   a   b   c
-    //  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16
-
-    //
-    //  .*                          a*  a   a*  .*  b*  .   c*  .*          a*
-    //  a   a   b   c   b   c   b   c   a   c   c   b   c   a   a   b   c
-
-    //  .*  a   a*  .*  b*  .   c*  .*          a*
-    //  a   a   b   c   b   c   b   c   a   c   c   b   c   a   a   b   c
-
-    //  0   1   2   3   4   5   6   7   8   9
-    //  1   2   3   4   5   6   7   8   9   10
 }
 
 int main(int argc, char *argv[])
 {
-    // char *testCaseS = "aaa";
-    // char *testCaseP = "ab*a*c*a";
-    // // Output: true
-
-    // char *testCaseS = "abcdede";
-    // char *testCaseP = "ab.*de";
-    // // Output: true
-
-    // char *testCaseS = "aa";
-    // char *testCaseP = "a";
-    // // Output: false
-
     char *testCaseS = "aaa";
-    char *testCaseP = "a*a";
+    char *testCaseP = "a*";
     // Output: true
-
-    // char *testCaseS = "aabcbcbcaccbcaabc";
-    // char *testCaseP = ".*a*aa*.*b*.c*.*a*";
-    // // Output: true
-
-    // char *testCaseS = "aaca";
-    // char *testCaseP = "ab*a*c*a";
-    // // Output: true
-
-    // char *testCaseS = "a";
-    // char *testCaseP = ".*..a*";
-    // //  Output: false
 
     bool result = isMatch(testCaseS, testCaseP);
 
     printf("\n======================\n");
     printf("testCase\n\ts:%s\tp:%s\nresult:\t%s\n", testCaseS, testCaseP, (result ? "true" : "false"));
-
-    // matchCases();
-
     return 0;
 }
