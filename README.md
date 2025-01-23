@@ -17,7 +17,7 @@ This repository is for learning purposes.
 |0008|[String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi/)| [C](./leetcode-problems/0008-string-to-integer-atoi/c/solution.c)|✅ Easy|
 |0009|[Palindrome Number](https://leetcode.com/problems/palindrome-number/)| [C++](./leetcode-problems/0009-palindrome-number/cpp/solution.cpp)|✅ Easy|
 |0010|[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)| |Hard|
-|0011|[Container With Most Water](https://leetcode.com/problems/container-with-most-water/)| |Medium|
+|0011|[Container With Most Water](https://leetcode.com/problems/container-with-most-water/)| [C](./leetcode-problems/0011-container-with-most-water/c/solution.c)|✅ Medium| `Array`, `Two Pointers`, `Greedy`|
 |0013|[Roman to Integer](https://leetcode.com/problems/roman-to-integer/)| [Python](./leetcode-problems/0013-roman-to-integer/py/solution.py)|✅ Easy|
 |0014|[Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)| [C](./leetcode-problems/0014-longest-common-prefix/c/solution.c)|✅ Easy|
 |0020|[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)| [C](./leetcode-problems/0020-valid-parentheses/c/solution.c)|✅ Easy|

@@ -46,22 +46,35 @@
 #include <stdlib.h>
 #include <string.h>
 
+bool matchPattern(char *s, char *p)
+{
+    int i = 0;
+    int j = 0;
+
+    while (i < (int)strlen(s)) {
+        printf("i:%d\tc:%c\n", i, s[i]);
+        if (j < (int)strlen(p)) {
+            if (s[i] != p[j]) {
+                return false;
+            }
+            j++;
+        }
+        i++;
+    }
+    if (j < (int)strlen(p)) return false;
+    return true;
+}
+
 bool isMatch(char *s, char *p)
 {
-    int i = 0, j = 0;
-
-    while ((i < (int)strlen(s)) && (j < (int)strlen(p))) {
-        printf("s[%d]: %c\tp[%d]: %c\n", i, s[i], j, p[j]);
-        i++, j++;
-    }
-
-    return true;
+    bool result = matchPattern(s, p);
+    return result;
 }
 
 int main(int argc, char *argv[])
 {
-    char *testCaseS = "aaa";
-    char *testCaseP = "a*";
+    char *testCaseS = "aaaa";
+    char *testCaseP = "aaa";
     // Output: true
 
     bool result = isMatch(testCaseS, testCaseP);
