@@ -21,7 +21,8 @@ This repository is for learning purposes.
 |0012|[Integer to Roman](https://leetcode.com/problems/integer-to-roman/)| [C](./leetcode-problems/0012-integer-to-roman/c/solution.c)|✅| Medium| `Hash Table`, `Math`, `String`|
 |0013|[Roman to Integer](https://leetcode.com/problems/roman-to-integer/)| [Python](./leetcode-problems/0013-roman-to-integer/py/solution.py)|✅| Easy|
 |0014|[Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)| [C](./leetcode-problems/0014-longest-common-prefix/c/solution.c)|✅| Easy|
-|0015|[3Sum](https://leetcode.com/problems/3sum/)| [C](./leetcode-problems/0015-3sum/c/solution.c)| |Medium| `Array`, `Two Pointers`, `Sorting`|
+|0015|[3Sum](https://leetcode.com/problems/3sum/)| [C](./leetcode-problems/0015-3sum/c/solution.c)|✅|Medium| `Array`, `Two Pointers`, `Sorting`|
+|0016|[3Sum Closest](https://leetcode.com/problems/3sum-closest/)| [C](./leetcode-problems/0016-3sum-closest/c/solution.c)|✅|Medium| `Array`, `Two Pointers`, `Sorting`|
 |0020|[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)| [C](./leetcode-problems/0020-valid-parentheses/c/solution.c)|✅| Easy|
 |0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| [C](./leetcode-problems/0021-merge-two-sorted-lists/c/solution.c)|✅| Easy| `Linked List`, `Recursion`|
 <!-- |0022|[Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)| |Medium|
