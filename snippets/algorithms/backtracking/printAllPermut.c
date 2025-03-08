@@ -35,7 +35,7 @@ void permute(char* str) {
 
 int main(int argc, char *argv[])
 {
-    char str[] = "ABC";
+    char str[] = "abcdef";
     permute(str);
     return 0;
 }

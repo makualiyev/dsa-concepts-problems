@@ -82,28 +82,61 @@ void printCharArr(char **charArr, int *arrSize)
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-char** letterCombinations(char* digits, int* returnSize) {
-    char** resultArr = malloc(sizeof(char *) * 1);
-    resultArr[0] = malloc(sizeof(char) * 3);
-    resultArr[0] = strcpy(resultArr[0], "");
-
-    char* tempPtr = digits;
-    int count = 0;
-    while (*tempPtr != '\0') {
-        *tempPtr++;
-        count++;
-    }
-    printf("count:%d\n", count);
-
+char** letterCombinations(char* digits, int* returnSize)
+{
+    /**
+     * Filling up the array with corresponding letters using
+     * hash table. We are also counting up how many possible
+     * combinations we have with given digits by saving it to
+     * `maxPossibleCombos`
+     */
+    int digitsCount = (int)strlen(digits);
+    char** digitsLetters = (char **)malloc(sizeof(char *) * (size_t)digitsCount);
     int i = 0;
+    int maxPossibleCombos = 1;
+
     while (digits[i] != '\0') {
         int tempDigit = (int)digits[i] - 48;
-        char* tempDigitRepr = find_symbol(tempDigit)->name;
-        printf("DEBUG\ttempDigit:%d\ttempDigitRepr:%s\n", tempDigit, tempDigitRepr);
+        char *tempDigitRepr = find_symbol(tempDigit)->name;
+        maxPossibleCombos = maxPossibleCombos * (int)strlen(tempDigitRepr);
+        digitsLetters[i] = tempDigitRepr;
         i++;
     }
 
-    *returnSize = 1;
+    printf("DEBUG\tmaxPossibleCombos:%d\n", maxPossibleCombos);
+
+    /**
+     * Creating the result array and allocating it with `maxPossibleCombos`
+     * char pointers.
+     */
+    char** resultArr = (char **)malloc(sizeof(char *) * (size_t)maxPossibleCombos);
+    
+    if (digitsCount <= 0) {
+        *returnSize = 1;
+        resultArr[0] = malloc(sizeof(char) * 1);
+        resultArr[0][0] = '\0';
+        free(digitsLetters);
+        return resultArr;
+    }
+
+    /**
+     * Main logic for permutations with digits
+     */
+    int totalCount = 0;
+    for (int idx = 0; idx < 3; idx++) {
+        for (int j = 0; j < 3; j ++) {
+            char *combo = malloc(sizeof(char) * 3);
+            combo[0] = digitsLetters[0][idx];
+            combo[1] = digitsLetters[1][j];
+            combo[2] = '\0';
+            resultArr[totalCount] = combo;
+            totalCount++;
+        }
+    }
+
+    // *returnSize = 1;
+    *returnSize = totalCount;
+    free(digitsLetters);
     return resultArr;
 }
 
@@ -122,7 +155,7 @@ int main(int argc, char *argv[])
     add_symbol(9, "wxyz");
 
 
-    char* digits = "2";
+    char* digits = "";
     int returnSize = 0;
 
     clock_t start = clock();
@@ -136,7 +169,10 @@ int main(int argc, char *argv[])
     printCharArr(result, &returnSize);
     printf("\nTime elapsed: %.4f\n", seconds);
 
-    free(result[0]);
+    // free(result[0]);
+    for (int i = 0; i < returnSize; i++) {
+        free(result[i]);
+    }
     free(result);
 
     return 0;
