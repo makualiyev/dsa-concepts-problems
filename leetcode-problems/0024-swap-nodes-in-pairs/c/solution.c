@@ -22,6 +22,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 /**
  * Definition for singly-linked list.
@@ -35,83 +37,50 @@ struct ListNode {
     struct ListNode *next;
 };
 
-void printList(struct ListNode* head) {
-    struct ListNode* node = head;
-    while (node != NULL) {
-        printf("%d->", node->val);
-        node = node->next;
-    }
-    printf("\n");
-}
-
-int measureList(struct ListNode* head) {
-    struct ListNode* p = head;
-    int i = 0;
-    while (p != NULL) {
-        p = p->next;
-        i++;
-    }
-    return i;
-}
-
-struct ListNode* addNodeReversed(struct ListNode* head, int val) {
-    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
+void printList(struct ListNode* head)
+{
+    struct ListNode* temp = head;
     if (head == NULL) {
-        head = newNode;
-        newNode->next = NULL;
-        newNode->val = val;
-    } else {
-        newNode->next = head;
-        newNode->val = val;
-        head = newNode;
+        printf("\n");
+        return;
     }
-    return head;
+    printf("%d->", temp->val);
+    printList(head->next);
 }
 
-struct ListNode* addNode(struct ListNode* head, int val) {
-    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
-    struct ListNode* node = head;
-
-    if (head == NULL) {
-        head = newNode;
-        newNode->next = NULL;
-        newNode->val = val;
-    } else {
-        while (node->next != NULL) {
-            node = node->next;
-        }
-        node->next = newNode;
-        newNode->val = val;
-        newNode->next = NULL;
-    }
+struct ListNode* constructFromString(char *listStr)
+{
+    struct ListNode* head = NULL;
     return head;
 }
 
 struct ListNode* swapPairs(struct ListNode* head) {
-    // split(head);
-    // split list into two
-    // then swap
-    int len = measureList(head);
-    int mid = (len / 2) + (len % 2);
-    // splitList(head, mid);
     return head;
 }
 
 int main(int argc, char *argv[])
 {
-    // Input: head = [1,2,3,4]
-    // Output: [2,1,4,3]
-    struct ListNode* list1 = NULL;
-    list1 = addNode(list1, 1);
-    list1 = addNode(list1, 2);
-    list1 = addNode(list1, 3);
-    list1 = addNode(list1, 4);
+    printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
+    printf("======================\n");
+    /**
+     * Input: head = [1,2,3,4]
+     * Output: [2,1,4,3]
+     */
+    char *listStr = "1->2->3->4->";
+    struct ListNode* list = constructFromString(listStr);
+    
+    clock_t start = clock();
+    struct ListNode* result = swapPairs(list);
+    clock_t end = clock();
+    float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
-    struct ListNode* result = swapPairs(list1);
-    printf("\n======================\n");
-    printf("testCase\n\tn: %s\n======================\nresult:\t", "1->2->3->4");
+    printf("======================\n");
+    printf("testCase: %s\n", "1->2->3->4");
+    printf("result:\t");
     printList(result);
-    printf("\n");
+    printf("\nTime elapsed: %.4f\n", seconds);
+
+    // free(list);
     free(result);
     return 0;
 }

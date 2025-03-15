@@ -79,6 +79,44 @@ void printCharArr(char **charArr, int *arrSize)
     printf("\n");
 }
 
+void multiplyLetters(char** resultArr, int* totalCount, char* digitsLetters)
+{
+    if (*totalCount == 0) {
+        for (int i = 0; i < (int)strlen(digitsLetters); i++) {
+            resultArr[*totalCount] = (char *)malloc(sizeof(char) * 2);
+            resultArr[*totalCount][0] = digitsLetters[i];
+            resultArr[*totalCount][1] = '\0';
+            *totalCount = *totalCount + 1;
+        }
+        return;
+    }
+    char** tempResArr = (char **)malloc(sizeof(char *) * ((size_t)(*totalCount) * strlen(digitsLetters)));
+    int tempTotalCount = 0;
+
+    for (int i = 0; i < *totalCount; i++) {
+        for (int j = 0; j < (int)strlen(digitsLetters); j++) {
+            int tempLetterLen = (int)strlen(resultArr[i]);
+            tempResArr[tempTotalCount] = (char *)malloc(sizeof(char) * ((size_t)tempLetterLen + 2));
+            tempResArr[tempTotalCount] = strcpy(tempResArr[tempTotalCount], resultArr[i]);
+            tempResArr[tempTotalCount][tempLetterLen] = digitsLetters[j];
+            tempResArr[tempTotalCount][tempLetterLen + 1] = '\0';
+            tempTotalCount++;
+        }
+    }
+
+    // freeing previous values in the result array
+    for (int idx = 0; idx < *totalCount; idx++) {
+        free(resultArr[idx]);
+    }
+
+    for (int idx = 0; idx < tempTotalCount; idx++) {
+        resultArr[idx] = tempResArr[idx];
+    }
+
+    free(tempResArr);
+    *totalCount = tempTotalCount;
+}
+
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
@@ -110,31 +148,21 @@ char** letterCombinations(char* digits, int* returnSize)
      * char pointers.
      */
     char** resultArr = (char **)malloc(sizeof(char *) * (size_t)maxPossibleCombos);
-    
-    if (digitsCount <= 0) {
-        *returnSize = 1;
-        resultArr[0] = malloc(sizeof(char) * 1);
-        resultArr[0][0] = '\0';
-        free(digitsLetters);
-        return resultArr;
-    }
+    int totalCount = 0;
 
     /**
-     * Main logic for permutations with digits
+     * Main logic
+     * 2 x 3 = (a + b + c) x (d + e + f) = ad + ae + af + bd + be + bf + cd + ce + cf
+     * (a + b) x (d + e) x (g + h) = (ad + ae + bd + be) x (g + h) = adg + adh + aeg + aeh + bdg + bdh + beg + beh
+     * (a + b + c) = a + b + c
      */
-    int totalCount = 0;
-    for (int idx = 0; idx < 3; idx++) {
-        for (int j = 0; j < 3; j ++) {
-            char *combo = malloc(sizeof(char) * 3);
-            combo[0] = digitsLetters[0][idx];
-            combo[1] = digitsLetters[1][j];
-            combo[2] = '\0';
-            resultArr[totalCount] = combo;
-            totalCount++;
+
+    if (digitsCount > 0) {
+        for (int idx = 0; idx < digitsCount; idx++) {
+            multiplyLetters(resultArr, &totalCount, digitsLetters[idx]);
         }
     }
 
-    // *returnSize = 1;
     *returnSize = totalCount;
     free(digitsLetters);
     return resultArr;
@@ -155,7 +183,7 @@ int main(int argc, char *argv[])
     add_symbol(9, "wxyz");
 
 
-    char* digits = "";
+    char* digits = "23";
     int returnSize = 0;
 
     clock_t start = clock();
@@ -169,7 +197,6 @@ int main(int argc, char *argv[])
     printCharArr(result, &returnSize);
     printf("\nTime elapsed: %.4f\n", seconds);
 
-    // free(result[0]);
     for (int i = 0; i < returnSize; i++) {
         free(result[i]);
     }
