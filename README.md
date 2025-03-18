@@ -36,9 +36,9 @@ This repository is for learning purposes.
 |0014|[Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)| [C](./leetcode-problems/0014-longest-common-prefix/c/solution.c)|✅| Easy| `String`, `Trie`|
 |0015|[3Sum](https://leetcode.com/problems/3sum/)| [C](./leetcode-problems/0015-3sum/c/solution.c)|✅|Medium| `Array`, `Two Pointers`, `Sorting`|
 |0016|[3Sum Closest](https://leetcode.com/problems/3sum-closest/)| [C](./leetcode-problems/0016-3sum-closest/c/solution.c)|✅|Medium| `Array`, `Two Pointers`, `Sorting`|
-|0017|[Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)| [C](./leetcode-problems/0017-letter-combinations-of-a-phone-number/c/solution.c)| |Medium| `Hash Table`, `String`, `Backtracking`|
-|0018|[4Sum](https://leetcode.com/problems/4sum/)| | |Medium| `Array`, `Two Pointers`, `Sorting`|
-|0019|[Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)| | |Medium| `Linked List`, `Two Pointers`|
+|0017|[Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)| [C](./leetcode-problems/0017-letter-combinations-of-a-phone-number/c/solution.c)|✅|Medium| `Hash Table`, `String`, `Backtracking`|
+|0018|[4Sum](https://leetcode.com/problems/4sum/)| [C](./leetcode-problems/0018-4sum/c/solution.c)|✅|Medium| `Array`, `Two Pointers`, `Sorting`|
+|0019|[Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)|[C](./leetcode-problems/0019-remove-nth-node-from-end-of-list/c/solution.c)| |Medium| `Linked List`, `Two Pointers`|
 |0020|[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)| [C](./leetcode-problems/0020-valid-parentheses/c/solution.c)|✅| Easy| `String`, `Stack`|
 |0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| [C](./leetcode-problems/0021-merge-two-sorted-lists/c/solution.c)|✅| Easy| `Linked List`, `Recursion`|
 
