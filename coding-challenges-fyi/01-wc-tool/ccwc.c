@@ -4,6 +4,9 @@
 
 int main(int argc, char *argv[])
 {
+    FILE* fptr = fopen("test.txt", "r");
+    printf("%zu\n", fptr);
+
     if (argc > 1) {
         char* option = argv[1];
         char* opton = argv[2];
