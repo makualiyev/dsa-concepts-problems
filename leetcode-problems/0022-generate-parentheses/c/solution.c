@@ -104,14 +104,14 @@ void swapChars(char* a, char* b)
     return;
 }
 
-int isValidParenthesis(char* parenthesis)
+int isValidParentheses(char* parentheses)
 {
-    int len = (int)strlen(parenthesis);
+    int len = (int)strlen(parentheses);
     int isValid = 1;
     struct Stack* top = NULL;
 
     for (int i = 0; i < len; i++) {
-        if (parenthesis[i] == ')') {
+        if (parentheses[i] == ')') {
             int popped;
             top = pop(top, &popped);
             if (popped == -1) {
@@ -120,7 +120,7 @@ int isValidParenthesis(char* parenthesis)
             }
             continue;
         }
-        top = push(top, parenthesis[i]);
+        top = push(top, parentheses[i]);
     }
     
     if (peek(top) != '\0') {
@@ -134,51 +134,45 @@ int isValidParenthesis(char* parenthesis)
 /**
  * using `backtracking`
  */
-void permuteParenthesis(char* parenthesis, int index, int length, char** strings, int* returnSize)
+void backtrackParentheses(char* parentheses, int index, int length, char** strings, int* returnSize)
 {
     if (index == length - 1) {
-        if (isValidParenthesis(parenthesis)) {
-            if (*returnSize > 0) {
-                for (int j = 0; j < *returnSize; j++) {
-                    if (strncmp(strings[j], parenthesis, (size_t)length) == 0) {
-                        return;
-                    }
-                }
-            }
+        printf("\t\tDEBUG:parentheses=%s\n", parentheses);
+        if (isValidParentheses(parentheses)) {
             size_t newLen = (size_t)(length + 1);
             strings[*returnSize] = (char *)malloc(sizeof(char) * newLen);
-            strings[*returnSize] = strncpy(strings[*returnSize], parenthesis, newLen);
+            strings[*returnSize] = strncpy(strings[*returnSize], parentheses, newLen);
             *returnSize = *returnSize + 1;
         }
         return;
     }
 
-    for (int i = 0; i < length; i++) {
-        swapChars(&parenthesis[index], &parenthesis[i]);
-        permuteParenthesis(parenthesis, index + 1, length, strings, returnSize);
-        swapChars(&parenthesis[index], &parenthesis[i]);
+    for (int i = index; i < length; i++) {
+        swapChars(&parentheses[index], &parentheses[i]);
+        backtrackParentheses(parentheses, index + 1, length, strings, returnSize);
+        swapChars(&parentheses[index], &parentheses[i]);
     }
 }
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-char** generateParenthesis(int n, int* returnSize) {
+char** generateParentheses(int n, int* returnSize) {
     *returnSize = 0;
     int len = n * 2;
     int maxPossibleCombo = (int)pow(2.0, (double)n);
-    char* baseParenthesis = malloc(sizeof(char) * (size_t)(len + 1));
+    char* baseParentheses = malloc(sizeof(char) * (size_t)(len + 1));
     char **strings = (char **)malloc(sizeof(char *) * (size_t)(maxPossibleCombo * 2));
 
     for (int i = 0, j = n; j < len; i++, j++) {
-        baseParenthesis[i] = '(';
-        baseParenthesis[j] = ')';
+        baseParentheses[i] = '(';
+        baseParentheses[j] = ')';
     }
-    baseParenthesis[len] = '\0';
+    baseParentheses[len] = '\0';
 
-    permuteParenthesis(baseParenthesis, 0, len, strings, returnSize);
+    backtrackParentheses(baseParentheses, 1, len, strings, returnSize);
     
-    free(baseParenthesis);
+    free(baseParentheses);
     return strings;
 }
 
@@ -187,7 +181,7 @@ int main(int argc, char *argv[])
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    int n = 5;
+    int n = 2;
     int returnSize = 0;
 
     printf("======================\n");
@@ -195,7 +189,7 @@ int main(int argc, char *argv[])
     printf("n= %d \t|\t", n);
 
     clock_t start = clock();
-    char** result = generateParenthesis(n, &returnSize);
+    char** result = generateParentheses(n, &returnSize);
     clock_t end = clock();
     float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
