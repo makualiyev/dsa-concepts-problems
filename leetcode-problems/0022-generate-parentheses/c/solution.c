@@ -87,6 +87,14 @@ void printStack(struct Stack* top)
     printf("]\n");
 }
 
+void freeArrOfChar(char** result, int* returnSize)
+{
+    for (int i = 0; i < *returnSize; i++) {
+        free(result[i]);
+    }
+    free(result);
+}
+
 void printArrOfChar(char** result, int* returnSize)
 {
     for (int i = 0; i < *returnSize; i++) {
@@ -131,27 +139,43 @@ int isValidParentheses(char* parentheses)
     return isValid;
 }
 
-/**
- * using `backtracking`
- */
-void backtrackParentheses(char* parentheses, int index, int length, char** strings, int* returnSize)
+char** multiplyParentheses(char* baseParentheses, char** currentSet, int n, int idx)
 {
-    if (index == length - 1) {
-        printf("\t\tDEBUG:parentheses=%s\n", parentheses);
-        if (isValidParentheses(parentheses)) {
-            size_t newLen = (size_t)(length + 1);
-            strings[*returnSize] = (char *)malloc(sizeof(char) * newLen);
-            strings[*returnSize] = strncpy(strings[*returnSize], parentheses, newLen);
-            *returnSize = *returnSize + 1;
+    if (n == idx) {
+        return currentSet;
+    }
+    
+    // for `(`, `)` it s 2^n 
+    size_t baseLen = strlen(baseParentheses);
+    int currentSetSize = (int)pow((double)baseLen, (double)(idx));
+    int resultSetSize = (int)pow((double)baseLen, (double)(idx + 1));
+    char** resultSet = (char **)malloc(sizeof(char *) * (size_t)resultSetSize);
+    int counter = 0;
+
+    if (currentSet == NULL) {
+        free(resultSet);
+        currentSet = (char **)malloc(sizeof(char *) * baseLen);
+        for (int k = 0; k < (int)baseLen; k++) {
+            currentSet[k] = malloc(sizeof(char) * 2);
+            currentSet[k][0] = baseParentheses[k];
+            currentSet[k][1] = '\0';
         }
-        return;
+        return multiplyParentheses(baseParentheses, currentSet, n, idx + 1);
     }
 
-    for (int i = index; i < length; i++) {
-        swapChars(&parentheses[index], &parentheses[i]);
-        backtrackParentheses(parentheses, index + 1, length, strings, returnSize);
-        swapChars(&parentheses[index], &parentheses[i]);
+    for (int i = 0; i < (int)baseLen; i++) {
+        for (int j = 0; j < currentSetSize; j++) {
+            char* element = malloc(sizeof(char) * (size_t)(idx + 2));
+            element = strcpy(element, currentSet[j]);
+            element[idx] = baseParentheses[i];
+            element[idx + 1] = '\0';
+            resultSet[counter] = element;
+            counter++;
+        }
     }
+
+    freeArrOfChar(currentSet, &currentSetSize);
+    return multiplyParentheses(baseParentheses, resultSet, n, idx + 1);
 }
 
 /**
@@ -159,20 +183,24 @@ void backtrackParentheses(char* parentheses, int index, int length, char** strin
  */
 char** generateParentheses(int n, int* returnSize) {
     *returnSize = 0;
-    int len = n * 2;
-    int maxPossibleCombo = (int)pow(2.0, (double)n);
-    char* baseParentheses = malloc(sizeof(char) * (size_t)(len + 1));
-    char **strings = (char **)malloc(sizeof(char *) * (size_t)(maxPossibleCombo * 2));
 
-    for (int i = 0, j = n; j < len; i++, j++) {
-        baseParentheses[i] = '(';
-        baseParentheses[j] = ')';
+    int num = n * 2;
+    int idx = 0;
+    int currentSetSize = (int)pow(2.0, (double)num);
+    char* baseParentheses = "()";
+    char** currentSet = NULL;
+    char** possibleParentheses = multiplyParentheses(baseParentheses, currentSet, num, idx);
+    char** strings = (char **)malloc(sizeof(char *) * (size_t)currentSetSize);
+
+    for (int i = 0; i < currentSetSize; i++) {
+        if (isValidParentheses(possibleParentheses[i])) {
+            strings[*returnSize] = (char *)malloc(sizeof(char) * (size_t)(num + 1));
+            strings[*returnSize] = strncpy(strings[*returnSize], possibleParentheses[i], (size_t)(num + 1));
+            *returnSize = *returnSize + 1;
+        }
     }
-    baseParentheses[len] = '\0';
 
-    backtrackParentheses(baseParentheses, 1, len, strings, returnSize);
-    
-    free(baseParentheses);
+    freeArrOfChar(possibleParentheses, &currentSetSize);
     return strings;
 }
 
@@ -181,7 +209,7 @@ int main(int argc, char *argv[])
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    int n = 2;
+    int n = 3;
     int returnSize = 0;
 
     printf("======================\n");
@@ -195,11 +223,8 @@ int main(int argc, char *argv[])
 
     printf("result:\t");
     printArrOfChar(result, &returnSize);
-    
-    for (int i = 0; i < returnSize; i++) {
-        free(result[i]);
-    }
-    free(result);
+    freeArrOfChar(result, &returnSize);
+
     printf("\nTime elapsed: %.4f\n", seconds);
     return 0;
 }
