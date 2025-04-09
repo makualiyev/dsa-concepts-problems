@@ -45,41 +45,106 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-
-bool matchPattern(char *s, char *p)
-{
-    int i = 0;
-    int j = 0;
-
-    while (i < (int)strlen(s)) {
-        printf("i:%d\tc:%c\n", i, s[i]);
-        if (j < (int)strlen(p)) {
-            if (s[i] != p[j]) {
-                return false;
-            }
-            j++;
-        }
-        i++;
-    }
-    if (j < (int)strlen(p)) return false;
-    return true;
-}
+#include <time.h>
 
 bool isMatch(char *s, char *p)
 {
-    bool result = matchPattern(s, p);
-    return result;
+    int slen = (int)strlen(s), plen = (int)strlen(p);
+    int isMatch = 1;
+    int i = 0, j = 0;
+    
+    while (i < slen)
+    {
+        if (j >= plen) {
+            isMatch = false;
+            break;
+        }
+        if (j < (plen - 1) && p[j + 1] == '*') {
+            if (s[i] != p[j] && p[j] != '.') {
+                j = j + 2;
+                continue;
+            } else {
+                i = i + 1;
+                continue;
+            }
+        }
+        if (s[i] != p[j] && p[j] != '.') {
+            isMatch = false;
+            break;
+        }
+        i++;
+        j++;
+    }
+    if (j < plen && p[plen - 1] != '*') {
+        isMatch = false;
+    }
+    return isMatch;
+}
+
+void runTestCase(char* s, char* p, int output)
+{
+    bool result = isMatch(s, p);
+    printf(
+        "%s\tInput: s = \"%s\", p = \"%s\"\tExpected: %s\n",
+        (result == output? "PASS": "FAIL"),
+        s, p, (output? "true": "false")
+    );
+}
+
+void runAllTestCases(void)
+{
+    // runTestCase("aa", "a", false);
+    // runTestCase("a", "aa", false);
+    // runTestCase("abc", "abc", true);
+    // runTestCase("aab", "cab", false);
+    // runTestCase("aaabbbc", "aaabbbc" , true);
+    // runTestCase("abc", "...", true);
+    // runTestCase("ab", "..", true);
+    // runTestCase("a", "..", false);
+    // runTestCase("aa", ".", false);
+
+    runTestCase("aa", "a", false);
+    runTestCase("aa", "a*", true);
+    runTestCase("ab", ".*", true);
+    runTestCase("aab", "c*a*b", true);
+    runTestCase("mississippi", "mis*is*ip*.", true);
+    runTestCase("ab", ".*c", false);
+    runTestCase("aaa", "aaaa", false);
+    runTestCase("a", "ab*", true);
+    runTestCase("a", ".*..a*", false);
+    runTestCase("aab", "c*a*b", true);
+    runTestCase("aaa", "ab*ac*a", true);
+    runTestCase("aaa", "ab*a*c*a", true);
+    runTestCase("aaa", "aaaa", false);
+    runTestCase("a",   "ab*a", false);
+    runTestCase("abcdede", "ab.*de", true);
+    runTestCase("aaa", "a*a", true);
+    runTestCase("aabcbcbcaccbcaabc", ".*a*aa*.*b*.c*.*a*", true);
+    runTestCase("aaca", "ab*a*c*a", true);
+    runTestCase("bbbba", ".*a*a", true);
 }
 
 int main(int argc, char *argv[])
 {
-    char *testCaseS = "aaaa";
-    char *testCaseP = "aaa";
+    printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
+    printf("======================\n");
+    runAllTestCases();
+    printf("======================\n");
+    
+    char *testCaseS = "ab";
+    char *testCaseP = ".*";
     // Output: true
 
-    bool result = isMatch(testCaseS, testCaseP);
+    printf("testCase: \n");
+    printf("s:%s\tp:%s\n", testCaseS, testCaseP);
 
-    printf("\n======================\n");
-    printf("testCase\n\ts:%s\tp:%s\nresult:\t%s\n", testCaseS, testCaseP, (result ? "true" : "false"));
+    clock_t start = clock();
+    bool result = isMatch(testCaseS, testCaseP);
+    clock_t end = clock();
+    float seconds = (float)(end - start) / CLOCKS_PER_SEC;
+
+    printf("result:\t%s\n", (result ? "true" : "false"));
+
+    printf("\nTime elapsed: %.4f\n", seconds);
     return 0;
 }

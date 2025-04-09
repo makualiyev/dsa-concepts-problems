@@ -24,8 +24,6 @@
 #include <math.h>
 #include <time.h>
 
-#define BUFFER_SIZE 4096
-
 struct Stack {
     char val;
     struct Stack *next;

@@ -17,22 +17,35 @@ The visualization of these combinations are represented in the following binary 
 
 This is what's called [Cartesian Product](https://en.wikipedia.org/wiki/Cartesian_product) of two sets, namely set $A=\{x, y\}$ and $B=\{x, y\}$ where x = `(`  and  y = `)`. Regarding our problem, the cartesian product will be repeated $2n$ times, so for $n = 1$ we will repeat two times: $A\times B = \{`((`, `()`, `)(`, `((`\}$ , then we would take the resulting output and calculate the cartesian product of it with set $A=\{ `(`, `)` \}$ and so on. It is now that we see the ***recursive*** nature of the problem, as for calculating $n = 3$ we need the result of $n = 2$ and for that the result of $n = 1$, which would be the base case.
 
+### Cartesian product approach
+
 Let's focus on a function which would calculate cartesian product recursively, for reference we will use function [itertools.product()](https://docs.python.org/3/library/itertools.html#itertools.product) in Python, and [Rosetta Code sample](https://rosettacode.org/wiki/Cartesian_product_of_two_or_more_lists#C) in C language. For our examples we will use Python as a pseudocode substitute, and here is a lightweight `cart_product()` function which takes two sets as parameters and returns a set with cartesian product of those sets as a result.
 
-```python
-def cart_product(set_a: list[str], set_b: list[str]) -> list[str]:
-    set_result = []
-    for elem_a in set_a:
-        for elem_b in set_b:
-            set_result.append(''.join([elem_a, elem_b]))
-    return set_result
+### Backtracking approach
 
->>> set_a = ['(',')']
->>> set_b = ['(',')']
->>> cart_product(set_a=set_a, set_b=set_b)
-['((', '()', ')(', '))']
+Let's take $n = 2$ and start with the symmetric set of parentheses `(())` of the length $2n$, the other solution is practically permutations starting from index $1$ to index $2n-1$ and by swapping characters we get `()()`. The same logic applies for an arbitrary $n$, and we just have to permute the string $[1, 2n-1]$.
 
-```
+But we can optimize it more if we somehow can distinguish between the open/close parentheses with different indices. For example, if $n = 3$ we start with `((()))` and permute it like this:
+
+| ( | ( | ( | ) | ) | ) |
+|---|---|---|---|---|---|
+| 0 | 1 | 2 | 3 | 4 | 5 |
+
+| ( |   )   | ( |   (   | ) | ) |
+|---|-------|---|-------|---|---|
+| 0 | **3** | 2 | **1** | 4 | 5 |
+
+| ( |   )   | ( | ) |   (   | ) |
+|---|-------|---|---|-------|---|
+| 0 | **4** | 2 | 3 | **1** | 5 |
+
+| ( | ( |   )   |   (   | ) | ) |
+|---|---|-------|-------|---|---|
+| 0 | 1 | **3** | **2** | 4 | 5 |
+
+| ( | ( |   )   | ) |   (   | ) |
+|---|---|-------|---|-------|---|
+| 0 | 1 | **4** | 3 | **2** | 5 |
 
 ## Implementation
 

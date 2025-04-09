@@ -4,17 +4,16 @@
 
 int main(int argc, char *argv[])
 {
-    FILE* fptr = fopen("test.txt", "r");
-    printf("%zu\n", fptr);
+    printf("METAINFO:\n  argc=%d\n  argv:\n", argc);
+    for (int i = 0; i < argc; i++) {
+        printf("   %s\n", argv[i]);
+    }
+    printf("======================\n");
 
-    if (argc > 1) {
+    if (argc == 3) {
         char* option = argv[1];
-        char* opton = argv[2];
-        printf("\t argc = %d\n", argc);
-        if (argv[3] == NULL) {
-            printf("argv[3] is NULL\n");
-        }
-        printf("%s\n", opton);
+        char* filename = argv[2];
+        FILE* fp = fopen(filename, "r");
     }
     return 0;
 }

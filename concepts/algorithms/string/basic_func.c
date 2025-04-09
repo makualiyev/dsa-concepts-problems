@@ -71,7 +71,7 @@ char *my_strcat(char *s1, const char *s2)
 int main(int argc, char* argv[])
 {
     char stringC[15] = "why,";
-    char string[] = "ok my nigga";
+    char string[] = "ok my man";
     // size_t sizeOfString1 = my_strlen_1(string);
     // size_t sizeOfString2 = my_strlen_2(string);
     // size_t sizeOfString3 = my_strlen_3(string);
