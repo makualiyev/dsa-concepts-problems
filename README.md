@@ -43,9 +43,6 @@ This repository is for learning purposes.
 |0020|[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)| [C](./leetcode-problems/0020-valid-parentheses/c/solution.c)|✅| Easy| `String`, `Stack`| |
 |0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| [C](./leetcode-problems/0021-merge-two-sorted-lists/c/solution.c)|✅| Easy| `Linked List`, `Recursion`| |
 |0022|[Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)|  [C](./leetcode-problems/0022-generate-parentheses/c/solution.c)|✅| Medium| `String`, `Dynamic Programming`, `Backtracking`| [Notes](./leetcode-problems/0022-generate-parentheses/notes.md) |
-|0023|[Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)|  [C](./leetcode-problems/0023-merge-k-sorted-lists/c/solution.c)| | Medium| `Linked List`, `Divide and Conquer`, `Heap (Priority Queue)`, `Merge Sort`| [Notes](./leetcode-problems/0023-merge-k-sorted-lists/notes.md) |
-
-<!-- 
-|0024|[Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)| |Medium| `Linked List`, `Recursion`|
-|0094|[Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)| |Easy|
-|0203|[Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)| |Easy| `Linked List`, `Recursion`| -->
+|0023|[Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)|  [C](./leetcode-problems/0023-merge-k-sorted-lists/c/solution.c)|✅| Hard| `Linked List`, `Divide and Conquer`, `Heap (Priority Queue)`, `Merge Sort`| [Notes](./leetcode-problems/0023-merge-k-sorted-lists/notes.md) |
+|0024|[Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)| | |Medium| `Linked List`, `Recursion`| |
+|0025|[Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/)| | |Hard| `Linked List`, `Recursion`| |

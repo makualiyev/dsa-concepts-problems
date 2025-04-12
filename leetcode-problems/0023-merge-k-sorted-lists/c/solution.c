@@ -45,6 +45,26 @@ struct ListNode {
     struct ListNode *next;
 };
 
+void printIntArr(int *arr, int arrSize)
+{
+    printf("[");
+    for (int i = 0; i < arrSize; i++) {
+        printf("%d, ", arr[i]);
+    }
+    printf("]\n");
+}
+
+int compare_ints(const void *a, const void *b) {
+    int arg1 = *(const int *)a;
+    int arg2 = *(const int *)b;
+
+    if (arg1 < arg2)
+        return -1;
+    if (arg1 > arg2)
+        return 1;
+    return 0;
+}
+
 void printList(struct ListNode* head)
 {
     struct ListNode* p = head;
@@ -154,23 +174,6 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
-// struct ListNode** buildArrOfListsFromString(struct ListNode** lists, char* string, int* listsSize)
-// {
-//     // [[1,4,5],[1,3,4],[2,6]]
-//     for (int i = 0; i < (int)strlen(string) - 1; i++) {
-//         if (string[i] == ']' && string[i + 1] == ',') {
-//             *listsSize = *listsSize + 1;
-//         }
-//     }
-//     if (*listsSize == 0) {
-//         return lists;
-//     }
-//     *listsSize = *listsSize + 1;
-//     printf("\t\tDEBUG: listsSize = %d\n", *listsSize);
-//     // struct ListNode** lists = (struct ListNode**)malloc(sizeof(struct ListNode*) * 3);
-//     return lists;
-// }
-
 struct ListNode* mergeLists(struct ListNode* list_l, struct ListNode* list_r)
 {
     struct ListNode* merged = NULL;
@@ -199,6 +202,35 @@ struct ListNode* mergeLists(struct ListNode* list_l, struct ListNode* list_r)
     return merged;
 }
 
+// struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
+//     struct ListNode* merged = NULL;
+    
+//     if (listsSize == 0) {
+//         return merged;
+//     }
+//     if (listsSize == 1) {
+//         return lists[0];
+//     }
+    
+//     int i = 2;
+//     struct ListNode* tempMerged = mergeLists(lists[0], lists[1]);
+
+//     if (listsSize == 2) {
+//         merged = tempMerged;
+//         return merged;
+//     }
+//     while (i < listsSize)
+//     {
+//         merged = mergeLists(tempMerged, lists[i]);
+//         freeList(tempMerged);
+//         tempMerged = merged;
+//         i++;
+//     }
+
+//     return merged;
+// }
+
+
 struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
     struct ListNode* merged = NULL;
     
@@ -209,21 +241,36 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
         return lists[0];
     }
     
-    int i = 2;
-    struct ListNode* tempMerged = mergeLists(lists[0], lists[1]);
-
-    if (listsSize == 2) {
-        merged = tempMerged;
-        return merged;
+    int newArrSize = 0;
+    for (int i = 0; i < listsSize; i++) {
+        struct ListNode* temp;
+        temp = lists[i];
+        while (temp != NULL) {
+            temp = temp->next;
+            newArrSize++;
+        }
     }
-    while (i < listsSize)
-    {
-        merged = mergeLists(tempMerged, lists[i]);
-        freeList(tempMerged);
-        tempMerged = merged;
-        i++;
+    int* listsAsArr = malloc(sizeof(int) * (size_t)newArrSize);
+
+    int counter = 0;
+    for (int i = 0; i < listsSize; i++) {
+        struct ListNode* temp;
+        temp = lists[i];
+        int j = 0;
+        while (temp != NULL) {
+            listsAsArr[counter] = temp->val;
+            temp = temp->next;
+            j++;
+            counter++;
+        }
+    }
+    qsort(listsAsArr, (size_t)counter, sizeof(int), compare_ints);
+
+    for (int i = 0; i < counter; i++) {
+        merged = addNode(merged, listsAsArr[i]);
     }
 
+    free(listsAsArr);
     return merged;
 }
 
@@ -232,27 +279,27 @@ int main(int argc, char *argv[])
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    // // [[1,4,5],[1,3,4],[2,6]]
-    // int listsSize = 3;
-    // struct ListNode** lists = (struct ListNode**)malloc(sizeof(struct ListNode*) * (size_t)listsSize);
-    // struct ListNode* lists_elem_1 = NULL;
-    // struct ListNode* lists_elem_2 = NULL;
-    // struct ListNode* lists_elem_3 = NULL;
-    // lists_elem_1 = buildListFromString(lists_elem_1, "[1,4,5]");
-    // lists_elem_2 = buildListFromString(lists_elem_2, "[1,3,4]");
-    // lists_elem_3 = buildListFromString(lists_elem_3, "[2,6]");
-    // lists[0] = lists_elem_1;
-    // lists[1] = lists_elem_2;
-    // lists[2] = lists_elem_3;
-
-    // [[],[1]]
-    int listsSize = 2;
+    // [[1,4,5],[1,3,4],[2,6]]
+    int listsSize = 3;
     struct ListNode** lists = (struct ListNode**)malloc(sizeof(struct ListNode*) * (size_t)listsSize);
     struct ListNode* lists_elem_1 = NULL;
     struct ListNode* lists_elem_2 = NULL;
-    lists_elem_2 = buildListFromString(lists_elem_2, "[1]");
+    struct ListNode* lists_elem_3 = NULL;
+    lists_elem_1 = buildListFromString(lists_elem_1, "[1,4,5]");
+    lists_elem_2 = buildListFromString(lists_elem_2, "[1,3,4]");
+    lists_elem_3 = buildListFromString(lists_elem_3, "[2,6]");
     lists[0] = lists_elem_1;
     lists[1] = lists_elem_2;
+    lists[2] = lists_elem_3;
+
+    // // [[],[1]]
+    // int listsSize = 2;
+    // struct ListNode** lists = (struct ListNode**)malloc(sizeof(struct ListNode*) * (size_t)listsSize);
+    // struct ListNode* lists_elem_1 = NULL;
+    // struct ListNode* lists_elem_2 = NULL;
+    // lists_elem_2 = buildListFromString(lists_elem_2, "[1]");
+    // lists[0] = lists_elem_1;
+    // lists[1] = lists_elem_2;
 
     printArrOfLists(lists, listsSize);
 
