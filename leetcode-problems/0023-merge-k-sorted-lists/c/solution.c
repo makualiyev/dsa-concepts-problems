@@ -29,6 +29,8 @@
                                                                         1->1->2->3->4->4->5->6
     Input: lists = []                                       // Output: []
     Input: lists = [[]]                                     // Output: []
+    Input: lists = [[],[1]]                                 // Output: [1]
+    Input: lists = [[7],[49],[73],[58],[30]]                // Output: [7,30,49,58,73]
 
 */
 
@@ -74,6 +76,17 @@ void freeList(struct ListNode* head)
     free(head);
 }
 
+int getSizeOfList(struct ListNode* head)
+{
+    int listSize = 0;
+    struct ListNode* p = head;
+    while (p != NULL) {
+        p = p->next;
+        listSize++;
+    }
+    return listSize;
+}
+
 void freeArrOfLists(struct ListNode** listArr, int listArrSize)
 {
     for (int i = 0; i < listArrSize; i++) {
@@ -116,7 +129,6 @@ struct ListNode* addNoderReversed(struct ListNode* head, int val)
 
 struct ListNode* buildListFromString(struct ListNode* head, char* string)
 {
-    // [12,3]
     int prevCounter = 1;
     
     for (int i = 1; i < (int)strlen(string); i++) {
@@ -159,9 +171,60 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
 //     return lists;
 // }
 
+struct ListNode* mergeLists(struct ListNode* list_l, struct ListNode* list_r)
+{
+    struct ListNode* merged = NULL;
+    struct ListNode* temp_l = list_l;
+    struct ListNode* temp_r = list_r;
+
+    while ((temp_l != NULL) && (temp_r != NULL)) {
+        if (temp_l->val <= temp_r->val) {
+            merged = addNode(merged, temp_l->val);
+            temp_l = temp_l->next;
+        } else {
+            merged = addNode(merged, temp_r->val);
+            temp_r = temp_r->next;
+        }
+    }
+
+    while (temp_l != NULL) {
+        merged = addNode(merged, temp_l->val);
+        temp_l = temp_l->next;
+    }
+    while (temp_r != NULL) {
+        merged = addNode(merged, temp_r->val);
+        temp_r = temp_r->next;
+    }
+
+    return merged;
+}
+
 struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
-    listsSize = listsSize + 1;
-    return lists[0];
+    struct ListNode* merged = NULL;
+    
+    if (listsSize == 0) {
+        return merged;
+    }
+    if (listsSize == 1) {
+        return lists[0];
+    }
+    
+    int i = 2;
+    struct ListNode* tempMerged = mergeLists(lists[0], lists[1]);
+
+    if (listsSize == 2) {
+        merged = tempMerged;
+        return merged;
+    }
+    while (i < listsSize)
+    {
+        merged = mergeLists(tempMerged, lists[i]);
+        freeList(tempMerged);
+        tempMerged = merged;
+        i++;
+    }
+
+    return merged;
 }
 
 int main(int argc, char *argv[])
@@ -169,19 +232,28 @@ int main(int argc, char *argv[])
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    // [[1,4,5],[1,3,4],[2,6]]
-    // char* listsStr = "[[1,4,5],[1,3,4],[2,6]]";
-    int listsSize = 3;
-    struct ListNode** lists = (struct ListNode**)malloc(sizeof(struct ListNode*) * listsSize);
+    // // [[1,4,5],[1,3,4],[2,6]]
+    // int listsSize = 3;
+    // struct ListNode** lists = (struct ListNode**)malloc(sizeof(struct ListNode*) * (size_t)listsSize);
+    // struct ListNode* lists_elem_1 = NULL;
+    // struct ListNode* lists_elem_2 = NULL;
+    // struct ListNode* lists_elem_3 = NULL;
+    // lists_elem_1 = buildListFromString(lists_elem_1, "[1,4,5]");
+    // lists_elem_2 = buildListFromString(lists_elem_2, "[1,3,4]");
+    // lists_elem_3 = buildListFromString(lists_elem_3, "[2,6]");
+    // lists[0] = lists_elem_1;
+    // lists[1] = lists_elem_2;
+    // lists[2] = lists_elem_3;
+
+    // [[],[1]]
+    int listsSize = 2;
+    struct ListNode** lists = (struct ListNode**)malloc(sizeof(struct ListNode*) * (size_t)listsSize);
     struct ListNode* lists_elem_1 = NULL;
     struct ListNode* lists_elem_2 = NULL;
-    struct ListNode* lists_elem_3 = NULL;
-    lists_elem_1 = buildListFromString(lists_elem_1, "[1,4,5]");
-    lists_elem_2 = buildListFromString(lists_elem_2, "[1,3,4]");
-    lists_elem_3 = buildListFromString(lists_elem_3, "[2,6]");
+    lists_elem_2 = buildListFromString(lists_elem_2, "[1]");
     lists[0] = lists_elem_1;
     lists[1] = lists_elem_2;
-    lists[2] = lists_elem_3;
+
     printArrOfLists(lists, listsSize);
 
     printf("======================\n");
@@ -193,7 +265,8 @@ int main(int argc, char *argv[])
     float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
     printf("result:\t");
-
+    printList(result);
+    freeList(result);
     freeArrOfLists(lists, listsSize);
 
     printf("\nTime elapsed: %.4f\n", seconds);

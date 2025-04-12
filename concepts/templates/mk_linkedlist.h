@@ -33,6 +33,17 @@ void freeList(struct ListNode* head)
     free(head);
 }
 
+int getSizeOfList(struct ListNode* head)
+{
+    int listSize = 0;
+    struct ListNode* p = head;
+    while (p != NULL) {
+        p = p->next;
+        listSize++;
+    }
+    return listSize;
+}
+
 struct ListNode* addNode(struct ListNode* head, int val)
 {
     struct ListNode* node = (struct ListNode*)malloc(sizeof(*node));

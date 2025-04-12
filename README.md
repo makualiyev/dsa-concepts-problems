@@ -30,7 +30,7 @@ This repository is for learning purposes.
 |0007|[Reverse Integer](https://leetcode.com/problems/reverse-integer/)| [C](./leetcode-problems/0007-reverse-integer/c/solution.c)|✅| Easy| | |
 |0008|[String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi/)| [C](./leetcode-problems/0008-string-to-integer-atoi/c/solution.c)|✅| Easy| | |
 |0009|[Palindrome Number](https://leetcode.com/problems/palindrome-number/)| [C++](./leetcode-problems/0009-palindrome-number/cpp/solution.cpp)|✅| Easy| | |
-|0010|[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)| | |Hard| `String`, `Dynamic Programming`,`Recursion`| [Notes](./leetcode-problems/0010-regular-expression-matching/notes.md)|
+|0010|[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)| [C](./leetcode-problems/0010-regular-expression-matching/c/solution.c)| |Hard| `String`, `Dynamic Programming`,`Recursion`| [Notes](./leetcode-problems/0010-regular-expression-matching/notes.md)|
 |0011|[Container With Most Water](https://leetcode.com/problems/container-with-most-water/)| [C](./leetcode-problems/0011-container-with-most-water/c/solution.c)|✅| Medium| `Array`, `Two Pointers`, `Greedy`| |
 |0012|[Integer to Roman](https://leetcode.com/problems/integer-to-roman/)| [C](./leetcode-problems/0012-integer-to-roman/c/solution.c)|✅| Medium| `Hash Table`, `Math`, `String`| |
 |0013|[Roman to Integer](https://leetcode.com/problems/roman-to-integer/)| [Python](./leetcode-problems/0013-roman-to-integer/py/solution.py)|✅| Easy| `Hash Table`, `Math`, `String`| |
