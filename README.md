@@ -46,3 +46,6 @@ This repository is for learning purposes.
 |0023|[Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)|  [C](./leetcode-problems/0023-merge-k-sorted-lists/c/solution.c)|✅| Hard| `Linked List`, `Divide and Conquer`, `Heap (Priority Queue)`, `Merge Sort`| [Notes](./leetcode-problems/0023-merge-k-sorted-lists/notes.md) |
 |0024|[Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)| | |Medium| `Linked List`, `Recursion`| |
 |0025|[Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/)| | |Hard| `Linked List`, `Recursion`| |
+|0026|[Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)| | |Easy| `Array`, `Two Pointers`| |
+|0217|[Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)| [C](./leetcode-problems/0217-contains-duplicate/c/solution.c)|✅|Easy| `Array`, `Hash Table`, `Sorting`| |
+|0242|[Valid Anagram](https://leetcode.com/problems/valid-anagram/)| [C](./leetcode-problems/0242-valid-anagram/c/solution.c)| |Easy| `Hash Table`, `String`, `Sorting`| |
