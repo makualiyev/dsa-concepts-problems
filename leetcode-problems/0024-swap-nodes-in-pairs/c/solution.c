@@ -151,13 +151,10 @@ struct ListNode* swapPairs(struct ListNode* head) {
     if (head == NULL) {
         return head;
     }
-
-    swapPairs(head->next);
+    struct ListNode* swapped = swapPairs(head->next);
     if (head->next != NULL) {
-        struct ListNode *temp;
-        temp = head;
-        head->next = head->next->next;
-        head = temp->next;
+        struct ListNode* temp;
+        
     }
     return head;
 }
@@ -171,7 +168,7 @@ int main(int argc, char *argv[])
      * Input: head = [1,2,3,4]
      * Output: [2,1,4,3]
      */
-    char *listStr = "[1,2,3,4]";
+    char *listStr = "[1,2]";
     struct ListNode* list = NULL;
     list = buildListFromString(list, listStr);
     
