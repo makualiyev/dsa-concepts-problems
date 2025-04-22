@@ -151,10 +151,13 @@ struct ListNode* swapPairs(struct ListNode* head) {
     if (head == NULL) {
         return head;
     }
-    struct ListNode* swapped = swapPairs(head->next);
+    swapPairs(head->next);
     if (head->next != NULL) {
-        struct ListNode* temp;
-        
+        struct ListNode* temp = NULL;
+        temp = head;
+        head = head->next;
+        temp->next = head->next;
+        head->next = temp;
     }
     return head;
 }
@@ -182,6 +185,7 @@ int main(int argc, char *argv[])
     printList(list);
     printf("result:\t");
     printList(result);
+
     printf("\nTime elapsed: %.4f\n", seconds);
 
     freeList(result);
