@@ -1,10 +1,2 @@
-CC=gcc
-CFLAGS=-g -Wall -pedantic -std=c99
-RM=rm -f
-
-TARGET=linked-list-recur
-
-all: $(TARGET)
-
-$(TARGET): $(TARGET).c
-	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c
+solution: reverseLinkedList.c
+	$(CC) reverseLinkedList.c -o reverseLinkedList -Wall -Wextra -Wno-unused-variable -Wconversion -Wshadow -Wcast-qual -fstack-protector-strong -pedantic -std=c99 -g -lm -fsanitize=address,undefined
