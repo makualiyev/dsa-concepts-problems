@@ -1,149 +1,229 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
 
-
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
 struct ListNode {
     int val;
     struct ListNode *next;
 };
 
-void printList(struct ListNode* head) {
-    struct ListNode* node = head;
-    while (node != NULL) {
-        printf("%d->", node->val);
-        node = node->next;
-    }
-    printf("\n");
-}
-
-struct ListNode* addNodeReversed(struct ListNode* head, int val) {
-    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
-    if (head == NULL) {
-        head = newNode;
-        newNode->next = NULL;
-        newNode->val = val;
-    } else {
-        newNode->next = head;
-        newNode->val = val;
-        head = newNode;
-    }
-    return head;
-}
-
-struct ListNode* addNode(struct ListNode* head, int val) {
-    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
-    struct ListNode* node = head;
-
-    if (head == NULL) {
-        head = newNode;
-        newNode->next = NULL;
-        newNode->val = val;
-    } else {
-        while (node->next != NULL) {
-            node = node->next;
+void printList(struct ListNode* head)
+{
+    struct ListNode* p = head;
+    while (1) {
+        if (p == NULL) {
+            printf("-> *\n");
+            break;
         }
-        node->next = newNode;
-        newNode->val = val;
-        newNode->next = NULL;
+        printf("-> %d ", p->val);
+        p = p->next;
     }
-    return head;
 }
 
-void printListRecur(struct ListNode* head)
+void printArrOfLists(struct ListNode** listArr, int listArrSize)
 {
-    if (head == NULL){
+    printf("[");
+    for (int i = 0; i < listArrSize; i++) {
+        printList(listArr[i]);
+        printf(",");
+    }
+    printf("]\n");
+}
+
+void freeList(struct ListNode* head)
+{
+    if (head == NULL)
         return;
-    }
-    printf("->%d", head->val);
-    printListRecur(head->next);
+    freeList(head->next);
+    free(head);
 }
 
-struct ListNode* reverseListRecur(struct ListNode* head)
+int getSizeOfList(struct ListNode* head)
 {
-    /**
-     * here we have `head` - which is let's say (4)->(NULL)
-     * and `newHead` which is (NULL) i.e. (4)->next. Thus
-     * now we have two successive nodes (4)->(NULL) for last
-     * function call stack. So, for next one it would be
-     * `head` (3)->(4) `newHead` (4)->(NULL)
-     * or
-     * `head` (3) `newHead` (4)
-     * Then the solution lies in reversing the link from (4)
-     * to (
-     */
-    if (head == NULL) {
-        return head;
+    int listSize = 0;
+    struct ListNode* p = head;
+    while (p != NULL) {
+        p = p->next;
+        listSize++;
     }
-
-    struct ListNode* newHead = reverseListRecur(head->next);
-    if (head->next == NULL) {
-        return head;
-    } 
-
-    struct ListNode* temp1;
-    struct ListNode* temp2;
-    temp1 = newHead;
-    temp2 = head;
-    while (temp1->next != NULL) {
-        temp1 = temp1->next;
-    }
-    temp2->next = NULL;
-    temp1->next = temp2;
-    
-    return newHead;
+    return listSize;
 }
 
-void reverseListRecurNoret(struct ListNode* head)
+void freeArrOfLists(struct ListNode** listArr, int listArrSize)
 {
-    /**
-     * here we have `head` - which is let's say (4)->(NULL)
-     * and `newHead` which is (NULL) i.e. (4)->next. Thus
-     * now we have two successive nodes (4)->(NULL) for last
-     * function call stack. So, for next one it would be
-     * `head` (3)->(4) `newHead` (4)->(NULL)
-     * or
-     * `head` (3) `newHead` (4)
-     * Then the solution lies in reversing the link from (4)
-     * to (
-     */
-    if (head == NULL) {
-        return;
+    for (int i = 0; i < listArrSize; i++) {
+        freeList(listArr[i]);
     }
+    free(listArr);
+}
 
-    reverseListRecurNoret(head->next);
-    
-    struct ListNode* newHead;
-    if (head->next == NULL) {
-        newHead = head;
+struct ListNode* addNode(struct ListNode* head, int val)
+{
+    struct ListNode* node = (struct ListNode*)malloc(sizeof(*node));
+    node->val = val;
+    node->next = NULL;
+
+    if (head == NULL) {
+        head = node;
     } else {
-        printf("newHead\t%d\n", newHead->val);
         struct ListNode* temp = head;
         while (temp->next != NULL) {
             temp = temp->next;
         }
+        temp->next = node;
     }
-
+    return head;
 }
 
+struct ListNode* addNoderReversed(struct ListNode* head, int val)
+{
+    struct ListNode* node = (struct ListNode*)malloc(sizeof(*node));
+    node->val = val;
+    if (head == NULL) {
+        node->next = NULL;
+        head = node;
+    } else {
+        node->next = head;
+        head = node;
+    }
+    return head;
+}
 
+struct ListNode* buildListFromString(struct ListNode* head, char* string)
+{
+    int prevCounter = 1;
+    
+    for (int i = 1; i < (int)strlen(string); i++) {
+        if (string[i] == ',' || string[i] == ']') {
+            int tempVal = 0;
+            int isNegative = 0;
+            for (int j = prevCounter, k = 0; j < i; j++, k++) {
+                if (string[j] == '-') {
+                    isNegative = 1;
+                    k = k - 1;
+                    continue;
+                }
+                tempVal = tempVal + ((int)string[j] - 48) * (int)pow(10.0, (double)k);
+            }
+            tempVal = tempVal * (isNegative? -1: 1);
+            head = addNode(head, tempVal);
+            
+            prevCounter = i + 1;
+            continue;
+        }
+    }
+    
+    return head;
+}
+
+/**
+ * examples from CS 112
+ * https://www.cs.bu.edu/fac/snyder/cs112/CourseMaterials/LinkedListNotes.Recursion.html
+ * 
+*/
+
+struct ListNode* construct(struct ListNode *head)
+{
+    if (head == NULL)
+        return NULL;
+    else {
+        head->next = construct(head->next);
+        return head;
+    }
+}
+
+struct ListNode* addOne(struct ListNode *head)
+{
+    if (head == NULL)
+        return NULL;
+    else {
+        head->next = addOne(head->next);
+        ++head->val;
+        return head;
+    }
+}
+
+struct ListNode *copy(struct ListNode *head)
+{
+    if (head == NULL)
+        return NULL;
+    else {
+        struct ListNode *newNode = (struct ListNode *)malloc(sizeof(struct ListNode));
+        newNode->val = head->val;
+        newNode->next = copy(head->next);
+        return newNode;
+    }
+}
+
+/**
+ * examples from 'mycodeschool'
+ * https://www.youtube.com/@mycodeschool
+ */
+void insertAtNthNode(struct ListNode* head, int val, int n)
+{
+    struct ListNode *temp = (struct ListNode*)malloc(sizeof(struct ListNode));
+    temp->val = val;
+    temp->next = NULL;
+    if (n == 1) {
+        /**
+         * check the behavior here, if I pass the pointer
+         * to the list (pointer to a pointer `head`), then
+         * it passes, but not if we pass a pointer as a pointer
+         */
+        // wrong
+        temp->next = head;
+        head = temp;
+        return;
+
+        // right
+        // temp->next = *head;
+        // *head = temp;
+        // return;
+    }
+    // wrong
+    struct ListNode *tempp = head;
+    // right?
+    // struct ListNode *tempp = *head;
+    for (int i = 0; i < n - 2; i++) {
+        tempp = tempp->next;
+    }
+    temp->next = tempp->next;
+    tempp->next = temp;
+}
 
 int main(int argc, char *argv[])
 {
-    struct ListNode *head = NULL;
-    // struct ListNode *headRev = NULL;
-    head = addNode(head, 1);
-    head = addNode(head, 2);
-    head = addNode(head, 3);
-    head = addNode(head, 4);
+    printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
+    printf("======================\n");
+    
+    char *listStr = "[1,2,3,4,5]";
+    struct ListNode* list = NULL;
+    list = buildListFromString(list, listStr);
 
-    printListRecur(head);
-    reverseListRecurNoret(head);
-    printf("\n");
-    // printListRecur(headRev);
-    // printf("\n");
-    // printf("\n");
-    printListRecur(head);
-    printf("\n");
+    // struct ListNode *newList = copy(list);
 
+    printf("list: ");
+    printList(list);
+
+    insertAtNthNode(list, 22, 1);
+    printList(list);
+    // printf("new list: ");
+    // printList(newList);
+    // printf("list : %p\tnewlist : %p\n", (void *)list, (void *)newList);
+
+
+
+
+    freeList(list);
+    // freeList(newList);
     return 0;
 }

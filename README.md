@@ -1,4 +1,4 @@
-# Computer Science concepts (DSA / LeetCode)
+# Data Structures and Algorithms concepts and problems
 
 This repository is for learning purposes.
 

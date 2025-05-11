@@ -124,12 +124,17 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
-struct ListNode* reverseList(struct ListNode* head) {
+void reverseList(struct ListNode* head) {
     if (head == NULL) {
-        return head;
+        return;
     }
-    struct ListNode* reversed = reverseList(head->next);
-    return head;
+    reverseList(head->next);
+    // if (head->next != NULL) {
+    //     struct ListNode *temp = head;
+    //     head->next = temp;
+    //     temp->next = head->next->next;
+    // }
+    return;
 }
 
 int main(int argc, char *argv[])
@@ -141,13 +146,13 @@ int main(int argc, char *argv[])
     struct ListNode* list = NULL;
     list = buildListFromString(list, listStr);
     
-    struct ListNode* result = reverseList(list);
+    reverseList(list);
 
     printf("======================\n");
     printf("testCase: \n");
     printList(list);
     printf("result:\t");
-    printList(result);
-    freeList(result);
+    printList(list);
+    freeList(list);
     return 0;
 }
