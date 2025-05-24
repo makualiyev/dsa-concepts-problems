@@ -62,7 +62,7 @@ struct ListNode* addNode(struct ListNode* head, int val)
     return head;
 }
 
-struct ListNode* addNoderReversed(struct ListNode* head, int val)
+struct ListNode* addNodeReversed(struct ListNode* head, int val)
 {
     struct ListNode* node = (struct ListNode*)malloc(sizeof(*node));
     node->val = val;

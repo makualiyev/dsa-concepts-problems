@@ -84,7 +84,7 @@ struct ListNode* addNode(struct ListNode* head, int val)
     return head;
 }
 
-struct ListNode* addNoderReversed(struct ListNode* head, int val)
+struct ListNode* addNodeReversed(struct ListNode* head, int val)
 {
     struct ListNode* node = (struct ListNode*)malloc(sizeof(*node));
     node->val = val;
@@ -164,11 +164,29 @@ struct ListNode *copy(struct ListNode *head)
     }
 }
 
+struct ListNode *insertInOrder(int k, struct ListNode *p)
+{
+    if (p == NULL) {
+        struct ListNode *newNode = (struct ListNode *)malloc(sizeof(struct ListNode));
+        newNode->val = k;
+        newNode->next = NULL;
+        return newNode;
+    } else if (p->val >= k) {
+        struct ListNode *newNode = (struct ListNode *)malloc(sizeof(struct ListNode));
+        newNode->val = k;
+        newNode->next = p;
+        return newNode;
+    } else {
+        p->next = insertInOrder(k, p->next);
+        return p;
+    }
+}
+
 /**
  * examples from 'mycodeschool'
  * https://www.youtube.com/@mycodeschool
  */
-void insertAtNthNode(struct ListNode* head, int val, int n)
+void insertAtNthNode(struct ListNode* head, struct ListNode** headP, int val, int n)
 {
     struct ListNode *temp = (struct ListNode*)malloc(sizeof(struct ListNode));
     temp->val = val;
@@ -180,6 +198,9 @@ void insertAtNthNode(struct ListNode* head, int val, int n)
          * it passes, but not if we pass a pointer as a pointer
          */
         // wrong
+
+        printf("\t\tDEBUG [head = %p\t&head = %p\theadP=%p]\n",
+                    (void *)head, (void *)(&head), (void *)headP);
         temp->next = head;
         head = temp;
         return;
@@ -200,28 +221,51 @@ void insertAtNthNode(struct ListNode* head, int val, int n)
     tempp->next = temp;
 }
 
+struct ListNode* reverseList(struct ListNode* head)
+{
+    struct ListNode* temp = head;
+    struct ListNode* prev = NULL;
+    struct ListNode* next = NULL;
+
+    while (temp != NULL) {
+        if (temp->next == NULL) {
+            temp->next = prev;
+            break;
+        } else if (prev) {
+            next = temp->next;  // temp = 2 temp->next = 3 prev = 1 next = 2
+            temp->next = prev;  // 2 -> 1
+            prev = temp;        // 
+            temp = next;        // 3
+        } else {
+            prev = temp;        // 1
+            next = temp->next;  // 2
+            temp = temp->next;  // 2
+            prev->next = NULL;  // 1 -> *
+        }
+    }
+    return temp;
+}
+
 int main(int argc, char *argv[])
 {
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    char *listStr = "[1,2,3,4,5]";
+    char *listStr = "[1,2,3,4]";
     struct ListNode* list = NULL;
     list = buildListFromString(list, listStr);
-
-    // struct ListNode *newList = copy(list);
 
     printf("list: ");
     printList(list);
 
-    insertAtNthNode(list, 22, 1);
-    printList(list);
+    list = reverseList(list);
+
     // printf("new list: ");
     // printList(newList);
+    printf("list again: ");
+    printList(list);
     // printf("list : %p\tnewlist : %p\n", (void *)list, (void *)newList);
-
-
-
+    
 
     freeList(list);
     // freeList(newList);
