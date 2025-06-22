@@ -147,18 +147,33 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
+void swapPairsRec(
+    struct ListNode *curr,
+    struct ListNode *prev,
+    struct ListNode *next,
+    int idx
+)
+{
+    if (curr == NULL) {
+        return;
+    }
+    if (curr->next != NULL) {
+        next = curr->next->next;
+    } else {
+        next = NULL;
+    }
+        
+    swapPairsRec(curr->next, curr, next, idx + 1);
+    if (idx % 2 == 0) {
+        prev->next = next;
+        curr->next = next->next;
+        next->next = curr;
+    }
+    return;
+}
+
 struct ListNode* swapPairs(struct ListNode* head) {
-    if (head == NULL) {
-        return head;
-    }
-    swapPairs(head->next);
-    if (head->next != NULL) {
-        struct ListNode* temp = NULL;
-        temp = head;
-        head = head->next;
-        temp->next = head->next;
-        head->next = temp;
-    }
+    swapPairsRec(head, NULL, NULL, 0);
     return head;
 }
 
@@ -171,7 +186,7 @@ int main(int argc, char *argv[])
      * Input: head = [1,2,3,4]
      * Output: [2,1,4,3]
      */
-    char *listStr = "[1,2]";
+    char *listStr = "[1,2,3,4]";
     struct ListNode* list = NULL;
     list = buildListFromString(list, listStr);
     
@@ -181,9 +196,9 @@ int main(int argc, char *argv[])
     float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
     printf("======================\n");
-    printf("testCase: \n");
+    printf("testCase: \n\t");
     printList(list);
-    printf("result:\t");
+    printf("result: \n\t");
     printList(result);
 
     printf("\nTime elapsed: %.4f\n", seconds);

@@ -129,11 +129,6 @@ void reverseList(struct ListNode* head) {
         return;
     }
     reverseList(head->next);
-    // if (head->next != NULL) {
-    //     struct ListNode *temp = head;
-    //     head->next = temp;
-    //     temp->next = head->next->next;
-    // }
     return;
 }
 
@@ -149,8 +144,10 @@ int main(int argc, char *argv[])
     reverseList(list);
 
     printf("======================\n");
+    
     printf("testCase: \n");
     printList(list);
+
     printf("result:\t");
     printList(list);
     freeList(list);

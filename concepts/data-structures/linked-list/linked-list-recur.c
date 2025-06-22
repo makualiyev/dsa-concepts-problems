@@ -221,7 +221,7 @@ void insertAtNthNode(struct ListNode* head, struct ListNode** headP, int val, in
     tempp->next = temp;
 }
 
-struct ListNode* reverseList(struct ListNode* head)
+struct ListNode* reverseListInPlace(struct ListNode* head)
 {
     struct ListNode* temp = head;
     struct ListNode* prev = NULL;
@@ -246,6 +246,51 @@ struct ListNode* reverseList(struct ListNode* head)
     return temp;
 }
 
+struct ListNode* reverseList(struct ListNode* head)
+{
+    struct ListNode* temp = head;
+    struct ListNode* prev = NULL;
+
+    while (temp != NULL) {
+        prev = temp;            // prev = temp = 1->
+        temp = temp->next;      // temp = temp->next | 1-> = 1->2->
+    }
+
+    return temp;
+}
+
+struct ListNode* swapNodes(struct ListNode* head)
+{
+    struct ListNode* temp = head;
+    struct ListNode* next = NULL;
+    struct ListNode* prev = NULL;
+
+    int i = 0;
+
+    while (temp != NULL) {
+                                        // 1 -> 2 -> 3 -> 4
+                                        // 2 -> 1 -> 4 -> 3
+        if (i == 1) {
+                                        // temp = 2 prev = 1
+            head = temp;                // save [2] new head position
+            prev->next = temp->next;    // 1 ->  = 3
+            next = temp->next;          // load 3
+            temp->next = prev;          // 3 = 
+            temp = next;                // 
+        } else if (i != 0 && i % 2 == 0) {
+            prev->next = temp->next;
+            next = temp->next;
+            temp->next = prev;
+            temp = next;
+        }
+        prev = temp; // load 1
+        temp = temp->next; // temp = 2
+
+        i++;
+    }
+    return temp;
+}
+
 int main(int argc, char *argv[])
 {
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
@@ -258,13 +303,14 @@ int main(int argc, char *argv[])
     printf("list: ");
     printList(list);
 
-    list = reverseList(list);
+    // struct ListNode* newList = swapNodes(list);
+    struct ListNode* newList = reverseList(list);
 
-    // printf("new list: ");
-    // printList(newList);
+    printf("new list: ");
+    printList(newList);
     printf("list again: ");
     printList(list);
-    // printf("list : %p\tnewlist : %p\n", (void *)list, (void *)newList);
+    printf("list : %p\tnewlist : %p\n", (void *)list, (void *)newList);
     
 
     freeList(list);

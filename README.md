@@ -6,7 +6,7 @@ This repository is for learning purposes.
 
 <!-- TOC -->
 
-- **Data Structures**
+- [**Data Structures**](./concepts/data-structures/README.md)
   - Array
   - Dynamic Array
   - [Linked List](./concepts/data-structures/linked-list/README.md)
