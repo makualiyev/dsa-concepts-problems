@@ -9,56 +9,87 @@ struct Node {
     struct Node* next;
 };
 
-struct Node* head = NULL;
-
-struct Node* Insert(struct Node* head, int x) {
-    struct Node* temp = (struct Node*)malloc(sizeof(*temp));
-    temp->data = x;
-    temp->next = NULL;
-    
-
-    if (head != NULL) {
-        temp->next = head;
-    }
-    head = temp;
-    return head;
-}
-
-void insertAtNth(int data, int n)
+void printList(struct Node* node)
 {
-    struct Node* temp1 = (struct Node*)malloc(sizeof(*temp1));
-    temp1->data = data;
-    temp1->next = NULL;
-    if (n == 1) {
-        temp1->next = head;
-        head = temp1;
-        return;
-    }
-    struct Node* temp2 = head;
-    for (int i = 0; i < n - 2; i++) {
-        temp2 = temp2->next;
-    }
-    temp1->next = temp2->next;
-    temp2->next = temp1;
-}
+    struct Node * temp = node;
 
-void Print() {
-    struct Node* temp = head;
-    printf("List is: ");
     while (temp != NULL) {
-        printf(" %d", temp->data);
+        printf("%d->", temp->data);
         temp = temp->next;
     }
     printf("\n");
 }
 
+// void Reverse()
+// {
+//     struct Node *current, *prev, *next;
+//     prev = NULL;
+//     current = head;
+    
+//     while (current != NULL) {
+//         next = current->next;
+//         current->next = prev;
+//         prev = current;
+//         current = next;
+//     }
+//     head = prev;
+// }
+
+void RecReverse(struct Node** head, struct Node* p)
+{
+    if (p->next == NULL) {
+        *head = p;
+        return;
+    }
+    RecReverse(head, p->next);
+    struct Node* q = p->next;
+    q->next = p;
+    p->next = NULL;
+}
+
+void swapNodes(struct Node** head, struct Node* p, int pos)
+{
+    if (p->next == NULL) {
+        printf("\tDEBUG pos:%d\n", pos);
+        return;
+    }
+    printf("\tnoDEBUG pos:%d\n", pos);
+    pos++;
+    swapNodes(head, p->next, pos);
+
+    // if (pos % 2 != 0) {
+    //     struct Node* q = p->next;
+    //     q->next = p;
+    //     p->next = NULL;
+    // }
+
+    printf("\t\tDEBUG pos:%d\tdata:%d\n", pos, p->data);
+}
+
 int main(int argc, char *argv[])
 {
-    head = NULL;
-    insertAtNth(2, 1);
-    insertAtNth(3, 2);
-    insertAtNth(4, 1);
-    insertAtNth(5, 2);
-    Print();
+    struct Node *head;
+    struct Node* second = malloc(sizeof(*second));
+    struct Node* third = malloc(sizeof(*third));
+    struct Node* fourth = malloc(sizeof(*fourth));
+    struct Node* fifth = malloc(sizeof(*fifth));
+
+    second->data = 1;
+    second->next = third;
+    third->data = 2;
+    third->next = fourth;
+    fourth->data = 3;
+    fourth->next = fifth;
+    fifth->data = 4;
+    fifth->next = NULL;
+    head = second;
+
+    printList(head);
+    // Reverse();
+    swapNodes(&head, head, 0);
+    printf("\t---------\n");
+    printList(head);
+
+    
     return 0;
 }

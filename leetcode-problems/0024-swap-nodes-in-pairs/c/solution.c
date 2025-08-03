@@ -147,33 +147,23 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
-void swapPairsRec(
-    struct ListNode *curr,
-    struct ListNode *prev,
-    struct ListNode *next,
-    int idx
-)
+void swapPairsRec(struct ListNode* prev, struct ListNode* curr, int pos)
 {
     if (curr == NULL) {
+        printf("\tDEBUG, pos=%d\n", pos);
         return;
     }
-    if (curr->next != NULL) {
-        next = curr->next->next;
-    } else {
-        next = NULL;
+    if (pos % 2 != 0) {
+        prev->next = curr->next;
+        curr->next = prev;
+        prev = curr;
     }
-        
-    swapPairsRec(curr->next, curr, next, idx + 1);
-    if (idx % 2 == 0) {
-        prev->next = next;
-        curr->next = next->next;
-        next->next = curr;
-    }
-    return;
+    swapPairsRec(curr, curr->next, pos + 1);
 }
 
 struct ListNode* swapPairs(struct ListNode* head) {
-    swapPairsRec(head, NULL, NULL, 0);
+    int pos = 0;
+    swapPairsRec(NULL, head, 0);
     return head;
 }
 

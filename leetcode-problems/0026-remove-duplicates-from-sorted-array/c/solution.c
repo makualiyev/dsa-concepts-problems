@@ -72,36 +72,7 @@ void printIntArr(int *arr, int *arrSize)
 }
 
 int removeDuplicates(int* nums, int numsSize) {
-    int k = numsSize;
-    int i = 0;
-    int j = i + 1;
-    int prev = 0;
-
-    while (j < numsSize - 1) {
-        if (nums[i] == nums[j]) {
-            while (1)
-            {
-                if (nums[i] != nums[j]) {
-                    prev = prev + 1;
-                    nums[prev] = nums[j];
-                    i = j;
-                    j++;
-                    break;
-                }
-                k--;
-                j++;
-            }
-            continue;
-        }
-        k--;
-        prev = prev + 1;
-        nums[prev] = nums[j];
-        i++;
-        j++;
-    }
-
-    printf("\tDEBUG k=%d\n", k);
-    return k;
+    return numsSize;
 }
 
 int main(int argc, char *argv[])
@@ -109,17 +80,8 @@ int main(int argc, char *argv[])
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    // int nums[] = { 1, 1, 1, 2, 3, 4, 4, 5 };
-    // int numsSize = 8;
-    /*
-    Input: nums = [0,0,1,1,1,2,2,3,3,4]
-    Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
-    */
-
-    int nums[] = { 0,0,1,1,1,2,2,3,3,4 };
-    int numsSize = 10;
-    // int nums[] = { 1,2 };
-    // int numsSize = 2;
+    int nums[] = { 1, 1, 2 };
+    int numsSize = 3;
     
     clock_t start = clock();
     int result = removeDuplicates(nums, numsSize);
