@@ -17,7 +17,8 @@ void printRecursion(int n)
 
 int main(int argc, char *argv[])
 {
-	int count = atoi(argv[1]);
+	int count;
+	scanf("%d", &count);
 	printRecursion(count);
 	return 0;
 }
