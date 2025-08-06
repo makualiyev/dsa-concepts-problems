@@ -44,7 +44,7 @@ This repository is for learning purposes.
 |0021|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| [C](./leetcode-problems/0021-merge-two-sorted-lists/c/solution.c)|✅| Easy| `Linked List`, `Recursion`| |
 |0022|[Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)|  [C](./leetcode-problems/0022-generate-parentheses/c/solution.c)|✅| Medium| `String`, `Dynamic Programming`, `Backtracking`| [Notes](./leetcode-problems/0022-generate-parentheses/notes.md) |
 |0023|[Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)|  [C](./leetcode-problems/0023-merge-k-sorted-lists/c/solution.c)|✅| Hard| `Linked List`, `Divide and Conquer`, `Heap (Priority Queue)`, `Merge Sort`| [Notes](./leetcode-problems/0023-merge-k-sorted-lists/notes.md) |
-|0024|[Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)| [C](./leetcode-problems/0024-swap-nodes-in-pairs/c/solution.c)|⬜️|Medium| `Linked List`, `Recursion`| [Notes](./leetcode-problems/0024-swap-nodes-in-pairs/notes.md)|
+|0024|[Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)| [C](./leetcode-problems/0024-swap-nodes-in-pairs/c/solution.c)|✅|Medium| `Linked List`, `Recursion`| [Notes](./leetcode-problems/0024-swap-nodes-in-pairs/notes.md)|
 |0025|[Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/)| |⬜️|Hard| `Linked List`, `Recursion`| |
 |0026|[Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)| |⬜️|Easy| `Array`, `Two Pointers`| |
 |0217|[Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)| [C](./leetcode-problems/0217-contains-duplicate/c/solution.c)|✅|Easy| `Array`, `Hash Table`, `Sorting`| |

@@ -147,23 +147,34 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
-void swapPairsRec(struct ListNode* prev, struct ListNode* curr, int pos)
+void swapPairsRec(struct ListNode** head, struct ListNode* node, int pos)
 {
-    if (curr == NULL) {
-        printf("\tDEBUG, pos=%d\n", pos);
+    if (node == NULL) {
         return;
     }
-    if (pos % 2 != 0) {
-        prev->next = curr->next;
-        curr->next = prev;
-        prev = curr;
+    if (node->next == NULL) {
+        return;
     }
-    swapPairsRec(curr, curr->next, pos + 1);
+    pos++;
+    swapPairsRec(head, node->next, pos);
+    if (pos % 2 == 0 && node->next->next != NULL) {
+        struct ListNode* next = node->next; // 3
+        struct ListNode* fnext = node->next->next; // 4
+        node->next = fnext;
+        next->next = fnext->next;
+        fnext->next = next;
+    }
+    if (pos == 1) {
+        struct ListNode* next = node->next;
+        node->next = next->next;
+        next->next = node;
+        *head = next;
+    }
 }
 
 struct ListNode* swapPairs(struct ListNode* head) {
     int pos = 0;
-    swapPairsRec(NULL, head, 0);
+    swapPairsRec(&head, head, 0);
     return head;
 }
 
@@ -190,6 +201,11 @@ int main(int argc, char *argv[])
     printList(list);
     printf("result: \n\t");
     printList(result);
+    // printf("address of list:%d\t%zu\naddress of result:%d\t%zu\n",
+    //             list->val,
+    //             list,
+    //             result->next->next->next->val,
+    //             result->next->next->next);
 
     printf("\nTime elapsed: %.4f\n", seconds);
 
