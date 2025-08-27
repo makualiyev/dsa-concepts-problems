@@ -103,3 +103,20 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     
     return head;
 }
+
+void reverseNode(struct ListNode** head, struct ListNode* node)
+{
+    if (node->next == NULL) {
+        *head = node;
+        return;
+    }
+    reverseNode(head, node->next);
+    struct ListNode* next = node->next;
+    next->next = node;
+    node->next = NULL;
+}
+
+struct ListNode* sliceList(struct ListNode* head)
+{
+    return head;
+}

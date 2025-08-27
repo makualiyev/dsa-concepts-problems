@@ -33,6 +33,7 @@
 #include <math.h>
 #include <time.h>
 
+int MAX_NODES = 5000;
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -154,7 +155,30 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
-struct ListNode* reverseKGroup(struct ListNode* head, int k) {
+void reverseKGroupUtil(
+    struct ListNode **head,
+    struct ListNode *node,
+    int pos,
+    int *length,
+    int k)
+{    
+    pos++;
+    if (node == NULL || node->next == NULL) {
+        *length = pos;
+        printf("\tDEBUG: pos:%d len:%d\n", pos, *length);
+        return;
+    }
+    reverseKGroupUtil(head, node->next, pos, length, k);
+    if (pos % k == 0 && pos != *length) {
+        // reversePartly();
+        printf("\t\tDEBUG now pos:%d\n", pos);
+    }
+}
+
+struct ListNode* reverseKGroup(struct ListNode* head, int k)
+{
+    int length = -1;
+    reverseKGroupUtil(&head, head, 0, &length, k);
     return head;
 }
 
@@ -164,7 +188,9 @@ int main(int argc, char *argv[])
     printf("======================\n");
     
     int k = 2;
-    char *listStr = "[1,2,3,4,5]";
+    // char *listStr = "[1,2,3,4,5]";
+    char *listStr = "[1,2,3,4,5,6]";
+    
     struct ListNode* list = NULL;
     list = buildListFromString(list, listStr);
     
@@ -174,9 +200,9 @@ int main(int argc, char *argv[])
     float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
     printf("======================\n");
-    printf("testCase: \n");
+    printf("testCase: \n\t");
     printList(list);
-    printf("result:\t");
+    printf("result: \n\t");
     printList(result);
 
     printf("\nTime elapsed: %.4f\n", seconds);

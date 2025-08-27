@@ -1,22 +1,21 @@
 /*
-    Given a linked list, swap every two adjacent nodes and return its head.
-    You must solve the problem without modifying the values in the list's nodes
-    (i.e., only nodes themselves may be changed.)
+    Given the head of a singly linked list and two integers left and right
+    where left <= right, reverse the nodes of the list from position left
+    to position right, and return the reversed list.
 
     -------------------------
     Topics:
-    * Recursion
     * Linked List
     -------------------------
     Constraints:
-    The number of nodes in the list is in the range [0, 100].
-    0 <= Node.val <= 100
+    * The number of nodes in the list is n.
+    * 1 <= n <= 500
+    * -500 <= Node.val <= 500
+    * 1 <= left <= right <= n
     -------------------------
     Testcases:
-    Input: head = [1,2,3,4]                                 // Output: [2,1,4,3]
-    Input: head = []                                        // Output: []
-    Input: head = [1]                                       // Output: [1]
-    Input: head = [1,2,3]                                   // Output: [2,1,3]
+    Input: head = [1,2,3,4,5], left = 2, right = 4          Output: [1,4,3,2,5]
+    Input: head = head = [5], left = 1, right = 1           Output: [5]
 
 */
 
@@ -25,6 +24,7 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
+
 
 /**
  * Definition for singly-linked list.
@@ -147,81 +147,111 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
-void swapPairsRec(struct ListNode** head, struct ListNode* node, int pos)
+void reverseNode(struct ListNode** head, struct ListNode* node)
 {
-    if (node == NULL) {
-        return;
-    }
     if (node->next == NULL) {
+        *head = node;
         return;
     }
-    pos++;
-    swapPairsRec(head, node->next, pos);
-    if (pos % 2 == 0 && node->next->next != NULL) {
-        struct ListNode* next = node->next; // 3
-        struct ListNode* fnext = node->next->next; // 4
-        node->next = fnext;
-        next->next = fnext->next;
-        fnext->next = next;
-    }
-    if (pos == 1) {
-        struct ListNode* next = node->next;
-        node->next = next->next;
-        next->next = node;
-        *head = next;
-    }
+    reverseNode(head, node->next);
+    struct ListNode* next = node->next;
+    next->next = node;
+    node->next = NULL;
 }
 
-struct ListNode* swapPairs(struct ListNode* head) {
-    int pos = 0;
-    swapPairsRec(&head, head, 0);
-    return head;
-}
-
-struct ListNode* swapPairsAlt(struct ListNode *head)
+void reverseNodeIteratively(struct ListNode **head, struct ListNode *node)
 {
-    if (head == NULL || head->next == NULL) {
+    struct ListNode *temp = node;
+    struct ListNode *prev = NULL, *curr = temp, *fnext = temp->next;
+    
+    while (temp != NULL) {
+        curr->next = prev;
+
+        if (fnext == NULL) {
+            *head = curr;
+            return;
+        }
+        temp = fnext;
+        prev = curr;
+        curr = temp;
+        fnext = curr->next;
+    }
+}
+
+void reverseNodeRecursively(struct ListNode **head, struct ListNode *node)
+{
+    if (node == NULL || node->next == NULL) {
+        *head = node;
+        return;
+    }
+    reverseNodeRecursively(head, node->next);
+    struct ListNode *pnext = node->next;
+    pnext->next = node;
+    node->next = NULL;
+}
+
+struct ListNode* reverseBetween(struct ListNode* head, int left, int right) {
+    struct ListNode *temp = head, *prev = NULL, *leftAnchor = NULL, *rightAnchor = NULL;
+    int pos = 1;
+    if (left == right) {
         return head;
     }
-    struct ListNode *temp = head->next;
-    head->next = swapPairsAlt(head->next->next);
-    temp->next = head;
+
+    while (temp != NULL) {
+        if (pos == left - 1) {
+            leftAnchor = temp;
+        } else if (pos == right + 1) {
+            rightAnchor = temp;
+            prev->next = NULL;
+        }
+        prev = temp;
+        temp = temp->next;
+        pos++;
+    }
+    if (leftAnchor == NULL) {
+        reverseNodeIteratively(&(head), head);
+    } else {
+        reverseNodeIteratively(&(leftAnchor->next), leftAnchor->next);
+    }
     
-    return temp;
+    temp = head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = rightAnchor;
+
+    return head;
 }
 
 int main(int argc, char *argv[])
 {
-    printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
-    printf("======================\n");
+    (void)argc;
+    (void)argv;
     
-    /**
-     * Input: head = [1,2,3,4]
-     * Output: [2,1,4,3]
-     */
-    char *listStr = "[1,2,3,4]";
+    int left = 2;
+    int right = 4;
+    char *listStr = "[1,2,3,4,5]";
+    
     struct ListNode* list = NULL;
     list = buildListFromString(list, listStr);
     
     clock_t start = clock();
-    // struct ListNode* result = swapPairs(list);
-    struct ListNode* result = swapPairsAlt(list);
+    struct ListNode* result = reverseBetween(list, left, right);
+    // reverseNodeRecursively(&list, list);
     clock_t end = clock();
     float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
     printf("======================\n");
     printf("testCase: \n\t");
+    printf("left: %d\n\tright: %d\n\t", left, right);
     printList(list);
     printf("result: \n\t");
     printList(result);
-    // printf("address of list:%d\t%zu\naddress of result:%d\t%zu\n",
-    //             list->val,
-    //             list,
-    //             result->next->next->next->val,
-    //             result->next->next->next);
+    // printList(list);
 
     printf("\nTime elapsed: %.4f\n", seconds);
 
     freeList(result);
+    // freeList(list);
     return 0;
 }
