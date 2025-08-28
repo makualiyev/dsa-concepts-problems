@@ -72,7 +72,19 @@ void printIntArr(int *arr, int *arrSize)
 }
 
 int removeDuplicates(int* nums, int numsSize) {
-    return numsSize;
+    int i = 0, j = 1, k = 1;
+    while (j < numsSize) {
+        if (nums[i] == nums[j]) {
+            j++;
+        } else if (nums[i] != nums[j]) {
+            nums[i + 1] = nums[j];
+            i++;
+            j++;
+            k++;
+        }
+    }
+
+    return k;
 }
 
 int main(int argc, char *argv[])
@@ -80,8 +92,8 @@ int main(int argc, char *argv[])
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    int nums[] = { 1, 1, 2 };
-    int numsSize = 3;
+    int nums[] = { 1,1 };
+    int numsSize = 2;
     
     clock_t start = clock();
     int result = removeDuplicates(nums, numsSize);
@@ -91,7 +103,9 @@ int main(int argc, char *argv[])
     printf("======================\n");
     printf("testCase: \n");
     printIntArr(nums, &numsSize);
-    printf("result:\t");
+    printf("======================\n");
+    printf("result:\n");
+    printIntArr(nums, &numsSize);
     printf("k = %d\n", result);
 
     printf("\nTime elapsed: %.4f\n", seconds);
