@@ -155,30 +155,93 @@ struct ListNode* buildListFromString(struct ListNode* head, char* string)
     return head;
 }
 
-void reverseKGroupUtil(
-    struct ListNode **head,
-    struct ListNode *node,
-    int pos,
-    int *length,
-    int k)
-{    
-    pos++;
-    if (node == NULL || node->next == NULL) {
-        *length = pos;
-        printf("\tDEBUG: pos:%d len:%d\n", pos, *length);
+void reverseNodeIteratively(struct ListNode **head, struct ListNode *node)
+{
+    struct ListNode *temp = node, *curr = node, *prev = NULL, *fnext = temp->next;
+    if (fnext == NULL) {
+        *head = curr;
         return;
     }
-    reverseKGroupUtil(head, node->next, pos, length, k);
-    if (pos % k == 0 && pos != *length) {
-        // reversePartly();
-        printf("\t\tDEBUG now pos:%d\n", pos);
+    while (temp != NULL) {
+        curr->next = prev;
+        if (fnext->next == NULL) {
+            fnext->next = curr;
+            *head = fnext;
+            break;
+        }
+        prev = curr;
+        curr = fnext;
+        fnext = fnext->next;
+        temp = curr;
     }
+
+}
+
+struct ListNode* reverseKGroupUtil(struct ListNode *head, int k, int pos)
+{
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+    pos++;
+    reverseKGroupUtil(head->next, k, pos);
+
+    if ((pos + 1) % k == 0) {
+        struct ListNode *temp = head, *anchor = NULL;
+        int anchored = 0;
+        int i = 0;
+        
+        while (temp != NULL) {
+            if (i == k) {
+                anchored = 1;
+                anchor = temp->next;
+                temp->next = NULL;
+            }
+            temp = temp->next;
+            i++;
+        }
+
+        if (anchor == NULL && anchored) {
+            reverseNodeIteratively(&head->next, head->next);
+            return head;
+        } else if (anchor == NULL && !anchored) {
+            return head;
+        }
+        reverseNodeIteratively(&head->next, head->next);
+        struct ListNode *ttemp = head->next;
+        while (ttemp->next != NULL) {
+            ttemp = ttemp->next;
+        }
+        ttemp->next = anchor;
+    } else if (pos == 0) {
+        struct ListNode *temp = head, *anchor = NULL;
+        int i = 0;
+        while (temp != NULL) {
+            if (i == k - 1) {
+                anchor = temp->next;
+                temp->next = NULL;
+            }
+            temp = temp->next;
+            i++;
+        }
+
+        reverseNodeIteratively(&head, head);
+        if (anchor == NULL) {
+            return head;
+        }
+        struct ListNode *ttemp = head;
+        while (ttemp->next != NULL) {
+            ttemp = ttemp->next;
+        }
+        ttemp->next = anchor;
+
+    }
+    return head;
 }
 
 struct ListNode* reverseKGroup(struct ListNode* head, int k)
 {
-    int length = -1;
-    reverseKGroupUtil(&head, head, 0, &length, k);
+    int pos = -1;
+    head = reverseKGroupUtil(head, k, pos);
     return head;
 }
 
@@ -187,9 +250,8 @@ int main(int argc, char *argv[])
     printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
     printf("======================\n");
     
-    int k = 2;
-    // char *listStr = "[1,2,3,4,5]";
-    char *listStr = "[1,2,3,4,5,6]";
+    int k = 3;
+    char *listStr = "[1,2,3,4,5]";
     
     struct ListNode* list = NULL;
     list = buildListFromString(list, listStr);
