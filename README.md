@@ -48,7 +48,8 @@ This repository is for learning purposes.
 |0025|[Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/)| [C](./leetcode-problems/0025-reverse-nodes-in-k-group/c/solution.c)|✅|Hard| `Linked List`, `Recursion`| |
 |0026|[Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)| [C](./leetcode-problems/0026-remove-duplicates-from-sorted-array/c/solution.c)|✅|Easy| `Array`, `Two Pointers`| |
 |0027|[Remove Element](https://leetcode.com/problems/remove-element/)| [C](./leetcode-problems/0027-remove-element/c/solution.c)|✅|Easy| `Array`, `Two Pointers`| |
-|0028|[Find the Index of the first occurrence in a string](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/)| [C](./leetcode-problems/0028-find-the-index-of-the-first-occurrence-in-a-string/c/solution.c)|⬜️|Easy| `Two Pointers`, `String`, `String Matching`| |
+|0028|[Find the Index of the first occurrence in a string](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/)| [C](./leetcode-problems/0028-find-the-index-of-the-first-occurrence-in-a-string/c/solution.c)|✅|Easy| `Two Pointers`, `String`, `String Matching`| |
+|0029|[Divide Two Integers](https://leetcode.com/problems/divide-two-integers/)| [C](./leetcode-problems/0029-divide-two-integers/c/solution.c)|⬜️|Medium| `Math`, `Bit Manipulation`| |
 |0092|[Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)| [C](./leetcode-problems/0092-reverse-linked-list-ii/c/solution.c)|✅|Medium| `Linked List`| |
 |0217|[Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)| [C](./leetcode-problems/0217-contains-duplicate/c/solution.c)|✅|Easy| `Array`, `Hash Table`, `Sorting`| |
 |0242|[Valid Anagram](https://leetcode.com/problems/valid-anagram/)| [C](./leetcode-problems/0242-valid-anagram/c/solution.c)|⬜️|Easy| `Hash Table`, `String`, `Sorting`| |

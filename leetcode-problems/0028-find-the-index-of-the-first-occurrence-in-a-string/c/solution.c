@@ -17,14 +17,37 @@
     Input: haystack = "leetcode", needle = "leeto"      // Output: -1
                                                         // Explanation:
                                                             "leeto" did not occur in "leetcode", so we return -1.
+    Input: haystack = "mississippi", needle = "issip"   // Output: 4
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 int strStr(char* haystack, char* needle) {
-    return -1;
+    int index = -1;
+    int i = 0;
+    
+    while (i < (int)strlen(haystack)) {
+        int j = 0, k = i, check = 1;
+        while (j < (int)strlen(needle)) {
+            if (haystack[k] != needle[j]) {
+                // i = k;
+                check = 0;
+                break;
+            }
+            j++;
+            k++;
+        }
+        if (check) {
+            index = i;
+            break;
+        }
+        i++;
+    }
+
+    return index;
 }
 
 int main(int argc, char *argv[])
@@ -32,8 +55,8 @@ int main(int argc, char *argv[])
     (void)argc;
     (void)argv;
 
-    char haystack[] = "sadbutsad";
-    char needle[] = "sad";
+    char haystack[] = "mississippi";
+    char needle[] = "issip";
     
     clock_t start = clock();
     printf("======================\n");
@@ -47,7 +70,7 @@ int main(int argc, char *argv[])
     
     printf("======================\n");
     printf("result:\n");
-    printf("k = %d\n", result);
+    printf("\tindex = %d\n", result);
 
     printf("\nTime elapsed: %.4f\n", seconds);
     return 0;
