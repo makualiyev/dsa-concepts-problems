@@ -60,26 +60,55 @@ void printIntArr(int *arr, int *arrSize)
 }
 
 int removeElement(int* nums, int numsSize, int val) {
-    return val;   
+    int i = 0, j = numsSize - 1, k = 0;
+    
+    while (i <= j) {
+        if (i == j) {
+            if (nums[i] == val) {
+                nums[i] = -1;
+            } else {
+                k++;
+            }
+            break;
+        }
+        if (nums[i] == val && nums[j] == val) {
+            nums[j] = -1;
+            j--;
+            continue;
+        } else if (nums[i] == val) {
+            nums[i] = nums[j];
+            nums[j] = -1;
+            i++;
+            j--;
+            k++;
+            continue;
+        }
+        i++;
+        k++;
+    }
+
+    return k;
 }
 
 int main(int argc, char *argv[])
 {
-    printf("METAINFO:\targv:[%s] argc:[%d]\n", argv[0], argc);
-    printf("======================\n");
-    
-    int nums[] = { 3,2,2,3 };
-    int numsSize = 4;
+    (void)argc;
+    (void)argv;
+
+    int nums[] = { 2 };
+    int numsSize = 1;
     int val = 3;
     
     clock_t start = clock();
+    printf("======================\n");
+    printf("testCase: \n");
+    printIntArr(nums, &numsSize);
+
     int result = removeElement(nums, numsSize, val);
     clock_t end = clock();
     float seconds = (float)(end - start) / CLOCKS_PER_SEC;
 
-    printf("======================\n");
-    printf("testCase: \n");
-    printIntArr(nums, &numsSize);
+    
     printf("======================\n");
     printf("result:\n");
     printIntArr(nums, &numsSize);
