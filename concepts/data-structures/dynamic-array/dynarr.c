@@ -1,9 +1,10 @@
 /**
  * Implementation of dynamic array
  */
-#include <stdio.h>
-
 int main(int argc, char* argv[])
 {
+    // int arr[] = { 1, 2, 3, 4, 5 };
+    int arr = 1;
 
+    return 0;
 }

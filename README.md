@@ -7,8 +7,8 @@ This repository is for learning purposes.
 <!-- TOC -->
 
 - [**Data Structures**](./concepts/data-structures/README.md)
-  - Array
-  - Dynamic Array
+  - [Array](./concepts/data-structures/dynamic-array/README.md)
+  - [Dynamic Array](./concepts/data-structures/dynamic-array/README.md)
   - [Linked List](./concepts/data-structures/linked-list/README.md)
   - Hash Table
 - [**Algorithms**](./concepts/algorithms/README.md)
