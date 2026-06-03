@@ -1,4 +1,4 @@
-/*
+/*{{{
     -------------------------
     Topics:
     * Math
@@ -20,7 +20,7 @@
     Input: dividend = -2147483648, divisor = 1
 	Input: dividend = -2147483648, divisor = -1		// Output: 2147483647
 	Input: dividend = -2147483648, divisor = 2		// Output: -1073741824
-*/
+*//*}}}*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,11 +34,34 @@ int divide(int dividend, int divisor) {
     if (divisor < 0) divisor = ~divisor + 1;
     int quotient = 0;
 
-
     while (dividend >= divisor) {
         dividend = dividend - divisor;
         quotient++;
     }
+	
+	int a = 2000;
+	int b = 2;
+	printf("\tDEBUG: a=%d\tb=%d\ta << b=%d\ta >> b=%d\n", a, b, a << b, a >> b);
+	int v = 43;
+	printf("\tDEBUG2: v=%d\n", v);
+	// v--;
+	// printf("\tDEBUG2: v--=%d\n", v);
+	v |= v >> 1;
+	printf("\tDEBUG2: v|= v >> 1 : %d\n", v);
+	v |= v >> 2;
+	printf("\tDEBUG2: v|= v >> 2 : %d\n", v);
+	v |= v >> 4;
+	printf("\tDEBUG2: v|= v >> 4 : %d\n", v);
+	v |= v >> 8;
+	printf("\tDEBUG2: v|= v >> 8 : %d\n", v);
+	v |= v >> 16;
+	printf("\tDEBUG2: v|= v >> 16 : %d\n", v);
+	// v++;
+    // printf("\tDEBUG2: v++ : %d\n", v);
+	v = v ^ (v >> 1);
+	printf("\tDEBUG2: v ^ ( v >> 1) : %d\n", v);
+
+
 
 	if (isDiff)
 		return ~quotient + 1;
@@ -50,8 +73,8 @@ int main(int argc, char *argv[])
     (void)argc;
     (void)argv;
 
-    int dividend = -2147483648; 
-	int divisor = -1;
+    int dividend = 10;
+	int divisor = 3;
     
     clock_t start = clock();
     printf("======================\n");
