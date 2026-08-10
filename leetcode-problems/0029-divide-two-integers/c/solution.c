@@ -28,44 +28,45 @@
 #include <time.h>
 
 int divide(int dividend, int divisor) {
-	if (dividend == INT_MIN) printf("\tDEBUG: INT MIN has been reached\n");
-    int isDiff = (dividend ^ divisor) < 0;
-    if (dividend < 0) dividend = ~dividend + 1;
-    if (divisor < 0) divisor = ~divisor + 1;
-    int quotient = 0;
-
-    while (dividend >= divisor) {
-        dividend = dividend - divisor;
-        quotient++;
+    long long divd = (long long)dividend;
+    long long divr = (long long)divisor;
+    int signFlag = (divd < 0) ^ (divr < 0);
+    
+    if (divd < 0) {
+        divd = ~divd + 1LL;
     }
-	
-	int a = 2000;
-	int b = 2;
-	printf("\tDEBUG: a=%d\tb=%d\ta << b=%d\ta >> b=%d\n", a, b, a << b, a >> b);
-	int v = 43;
-	printf("\tDEBUG2: v=%d\n", v);
-	// v--;
-	// printf("\tDEBUG2: v--=%d\n", v);
-	v |= v >> 1;
-	printf("\tDEBUG2: v|= v >> 1 : %d\n", v);
-	v |= v >> 2;
-	printf("\tDEBUG2: v|= v >> 2 : %d\n", v);
-	v |= v >> 4;
-	printf("\tDEBUG2: v|= v >> 4 : %d\n", v);
-	v |= v >> 8;
-	printf("\tDEBUG2: v|= v >> 8 : %d\n", v);
-	v |= v >> 16;
-	printf("\tDEBUG2: v|= v >> 16 : %d\n", v);
-	// v++;
-    // printf("\tDEBUG2: v++ : %d\n", v);
-	v = v ^ (v >> 1);
-	printf("\tDEBUG2: v ^ ( v >> 1) : %d\n", v);
+    if (divr < 0) {
+        divr = ~divr + 1LL;
+    }
+
+    long long rem = divd;
+    long long quotient = 0;
+    
+    // printf("\tDEBUG: divd=%lld\n", divd);
+    // printf("\tDEBUG: divr=%lld\n", divr);
 
 
+    for (int i = 31; i >= 0; i--) {
+        if ((divr << i) <= rem) {
+            rem -= (divr << i);
+            quotient += (1LL << i);
+        }
+    }
+    // printf("\tDEBUG: quotient=%lld\n", quotient);
+    // printf("\tDEBUG: sign=%d\n", sign);
+    
+    if (signFlag) {
+        quotient = ~quotient + 1LL;
+    }
 
-	if (isDiff)
-		return ~quotient + 1;
-    return quotient;
+    
+    if (quotient < INT_MIN) {
+        return INT_MIN;
+    } else if (quotient > INT_MAX) {
+        return INT_MAX;
+    }
+
+	return (int)quotient;
 }
 
 int main(int argc, char *argv[])
@@ -73,8 +74,8 @@ int main(int argc, char *argv[])
     (void)argc;
     (void)argv;
 
-    int dividend = 10;
-	int divisor = 3;
+    int dividend = 92;
+	int divisor = 7;
     
     clock_t start = clock();
     printf("======================\n");
