@@ -50,14 +50,6 @@
 #include <math.h>
 #include <time.h>
 
-void printIntArr(int *arr, int *arrSize)
-{
-    printf("[");
-    for (int i = 0; i < *arrSize; i++) {
-        printf("%d%s", arr[i], (i == (*arrSize - 1)? "": ","));
-    }
-    printf("]\n");
-}
 
 int removeElement(int* nums, int numsSize, int val) {
     int i = 0, j = numsSize - 1, k = 0;
@@ -90,7 +82,7 @@ int removeElement(int* nums, int numsSize, int val) {
     return k;
 }
 
-int main(int argc, char *argv[])
+/* int main(int argc, char *argv[])
 {
     (void)argc;
     (void)argv;
@@ -117,3 +109,4 @@ int main(int argc, char *argv[])
     printf("\nTime elapsed: %.4f\n", seconds);
     return 0;
 }
+*/

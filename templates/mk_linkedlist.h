@@ -25,6 +25,17 @@ void printList(struct ListNode* head)
     }
 }
 
+void printArrOfLists(struct ListNode** listArr, int listArrSize)
+{
+	printf("[");
+	for (int i = 0; i < listArrSize; i++) {
+		printList(listArr[i]);
+		printf(",");
+	}
+	printf("]\n");
+
+}
+
 void freeList(struct ListNode* head)
 {
     if (head == NULL)
