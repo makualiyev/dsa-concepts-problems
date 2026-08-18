@@ -15,20 +15,10 @@
     Input: s = "barfoothefoobarman", words = ["foo","bar"]                          // Output: [0, 9]
 	*/
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "uthash.h"
 
-
-void printStringArr(char **words, int wordsSize)
-{
-    printf("[");
-    for (int i = 0; i < wordsSize; i++) {
-        printf("%s%s", words[i], (i == wordsSize - 1) ? "": ",");
-    }
-    printf("]\n");
-}
 
 struct hash_entry {
     char *name;
@@ -95,6 +85,16 @@ void delete_entries(void)
     }
 }
 
+void delete_result_entries(void)
+{
+	struct hash_entry *current_entry, *tmp;
+	HASH_ITER(hh, result_entries, current_entry, tmp) {
+		HASH_DEL(result_entries, current_entry);
+		free(current_entry->name);
+		free(current_entry);
+	}
+}
+
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().
@@ -142,9 +142,10 @@ int* findSubstring(char* s, char** words, int wordsSize, int* returnSize) {
             result[fI] = i;
             fI++;
         }
-        
+        delete_result_entries();
 		i++;
 	}
 
+	delete_entries();
     return result;
 }
